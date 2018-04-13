@@ -1,3 +1,46 @@
 <html>
-
+  <head>
+    <meta charset="utf-8">
+    <title>按钮事件样式demo集</title>
+    <style>
+      :root{
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+      }
+      #demo-btn{
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="demo-btn">
+      <button id="btn1">按钮光晕</button>
+    </div>
+    <style>
+      #btn1{
+        padding: 1rem 2rem;
+        background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 0 0 0;
+        border-radius: 0.5rem;
+        position: relative;
+      }
+      #btn1::before{
+        content: '';
+        position: absolute;
+        left: 0rem;
+        top: 0rem;
+        height: 3rem;
+        width: 8rem;
+        background: radial-gradient(circle closest-side, #a3b1f1, transparent);
+      }
+    </style>
+  </body>
 </html>
