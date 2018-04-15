@@ -1,0 +1,68 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>按钮事件样式demo集</title>
+  <style>
+    :root {
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+    }
+    #demo-btn {
+      height: 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <style>
+    #btn1 {
+      padding: 1rem 2rem;
+      background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      outline: none;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 0 0;
+      border-radius: 0.5rem;
+      position: relative;
+      overflow: hidden;
+
+    }
+
+    #btn1::before {
+      --size: 0rem;
+      content: '';
+      position: absolute;
+      left: var(--circle-center-left);
+      top: var(--circle-center-top);
+      height: var(--size);
+      width: var(--size);
+      background: radial-gradient(circle closest-side, #a3b1f1, transparent);
+      transition: all .2s ease, left 0s, top 0s;
+      transform: translate(-50%, -50%);
+    }
+
+    #btn1:hover::before {
+      --size: 4rem;
+    }
+  </style>
+  <div id="demo-btn">
+    <button id="btn1">按钮光晕</button>
+  </div>
+  <script>
+    const btn1 = document.querySelector('#btn1')
+    btn1.onmousemove = (e) => {
+      const x = e.pageX - btn1.offsetLeft
+      const y = e.pageY - btn1.offsetTop
+      btn1.style.setProperty('--circle-center-left', x + 'px')
+      btn1.style.setProperty('--circle-center-top', y + 'px')
+    }
+  </script>
+</body>
+
+</html>
