@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>vue拖动</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<style>
+  * {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<body>
+  <style>
+    #app {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    .drag {
+
+      flex-direction: column;
+      align-items: center;
+      width: 10rem;
+    }
+
+    .drag li {
+      list-style-type: none;
+      padding-left: 2rem;
+      height: 2rem;
+      width: 7rem;
+      align-items: center;
+      line-height: 2rem;
+      border: 1px solid #333;
+      user-select: none;
+    }
+
+    .drag li span {
+      text-align: center;
+      background-color: #333;
+      color: #fff;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      line-height: 1rem;
+      display: inline-block;
+      margin: 0 0.5rem;
+    }
+
+    .fixedItem {
+      position: fixed;
+      list-style-type: none;
+      padding-left: 2rem;
+      height: 2rem;
+      width: 7rem;
+      align-items: center;
+      line-height: 2rem;
+      border: 1px solid red;
+      user-select: none;
+    }
+
+    .fixedItem span {
+      text-align: center;
+      background-color: #333;
+      color: #fff;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      line-height: 1rem;
+      display: inline-block;
+      margin: 0 0.5rem;
+    }
+  </style>
+  <div id="app" @mousedown='dragStart' @mousemove='dragMove' @mouseup='dragUp'>
+    <ul class='drag'>
+      <li v-for='item in arr1'>
+        <span>{{item.order}}</span>{{item.name}}</li>
+    </ul>
+    <ul class='drag'>
+      <li v-for='item in arr2'>
+        <span>{{item.order}}</span>{{item.name}}</li>
+    </ul>
+    <div v-show='mouseType' v-html='dragHtml' class="fixedItem" :style=`top:${fixedItemY}px;left:${fixedItemX}px`></div>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        arr1: [
+          { order: 1, name: 'zhao', fixed: false },
+          { order: 2, name: 'qian', fixed: false },
+          { order: 3, name: 'sun', fixed: false },
+          { order: 4, name: 'li', fixed: false },
+          { order: 5, name: 'zhou', fixed: false },
+          { order: 6, name: 'wu', fixed: false },
+          { order: 7, name: 'zhen', fixed: false },
+          { order: 8, name: 'wang', fixed: false },
+          { order: 9, name: 'jiang', fixed: false }
+        ],
+        arr2: [{ order: 10, name: 'zhang', fixed: false }],
+        mouseType: false,
+        dragHtml: '',
+        fixedItemX: 0,
+        fixedItemY: 0,
+        offsetX: 0,
+        offsetY: 0
+      },
+      methods: {
+        dragStart(e) {
+
+          if (e.target.localName !== 'li') {
+            return
+          }
+          this.mouseType = true
+          console.log(e)
+          this.dragHtml = e.target.innerHTML
+
+          this.offsetX = e.offsetX
+          this.offsetY = e.offsetY
+          this.fixedItemX = e.pageX - e.offsetX
+          this.fixedItemY = e.pageY - e.offsetY
+        },
+        dragMove(e) {
+          if (!this.mouseType) {
+            return
+          }
+          console.log(e)
+          this.fixedItemX = e.pageX - this.offsetX
+          this.fixedItemY = e.pageY - this.offsetY
+
+
+        },
+        dragUp(e) {
+          if (!this.mouseType) {
+            return
+          }
+          console.log(e)
+          this.mouseType = false
+          this.dragHtml = ''
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
