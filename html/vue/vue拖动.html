@@ -80,12 +80,12 @@
     }
   </style>
   <div id="app" @mousedown='dragStart' @mousemove='dragMove' @mouseup='dragUp'>
-    <ul class='drag'>
-      <li v-for='item in arr1'>
+    <ul class='drag' id='darg1'>
+      <li v-for='(item,index) in arr1' :data-num='index' data-array='arr1'>
         <span>{{item.order}}</span>{{item.name}}</li>
     </ul>
-    <ul class='drag'>
-      <li v-for='item in arr2'>
+    <ul class='drag' id='darg2'>
+      <li v-for='(item,index) in arr2' :data-num='index' data-array='arr1'>
         <span>{{item.order}}</span>{{item.name}}</li>
     </ul>
     <div v-show='mouseType' v-html='dragHtml' class="fixedItem" :style=`top:${fixedItemY}px;left:${fixedItemX}px`></div>
@@ -110,41 +110,86 @@
         dragHtml: '',
         fixedItemX: 0,
         fixedItemY: 0,
-        offsetX: 0,
-        offsetY: 0
+        clickPoint: {},
+        darg1: {},
+        darg2: {},
+        clickData: {},
+        pushType: false
+      },
+      mounted() {
+        let darg1 = document.querySelector('#darg1')
+        this.darg1 = { x: darg1.offsetLeft, y: darg1.offsetTop, w: darg1.offsetWidth, h: darg1.offsetHeight }
+        let darg2 = document.querySelector('#darg2')
+        this.darg2 = { x: darg2.offsetLeft, y: darg2.offsetTop, w: darg2.offsetWidth, h: darg2.offsetHeight }
       },
       methods: {
         dragStart(e) {
-
           if (e.target.localName !== 'li') {
             return
           }
           this.mouseType = true
-          console.log(e)
+          // console.log(e.target.dataset)
+          this.clickData = { num: e.target.dataset.num, arrName: e.target.dataset.array, conent: this[e.target.dataset.array][e.target.dataset.num] }
+          console.log(this.clickData);
           this.dragHtml = e.target.innerHTML
-
-          this.offsetX = e.offsetX
-          this.offsetY = e.offsetY
+          this.clickPoint.x = e.offsetX
+          this.clickPoint.y = e.offsetY
+          this.clickPoint.w = e.target.clientWidth
+          this.clickPoint.h = e.target.clientHeight
           this.fixedItemX = e.pageX - e.offsetX
           this.fixedItemY = e.pageY - e.offsetY
+          // console.log(this.clickPoint)
         },
         dragMove(e) {
           if (!this.mouseType) {
             return
           }
-          console.log(e)
-          this.fixedItemX = e.pageX - this.offsetX
-          this.fixedItemY = e.pageY - this.offsetY
-
-
+          this.fixedItemX = e.pageX - this.clickPoint.x
+          this.fixedItemY = e.pageY - this.clickPoint.y
+          if ((e.pageX - this.clickPoint.x) < this.darg1.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.darg1.x + this.darg1.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg1.x) ||
+            ((e.pageX - this.clickPoint.x) > this.darg1.x && (e.pageX - this.clickPoint.x) < (this.darg1.x + this.darg1.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg1.x) {
+            console.log('在darg1中')
+            if (this.clickData.arrName !== 'arr1') {
+              this.pushType = true
+            } else {
+              this.pushType = false
+            }
+          } else if ((e.pageX - this.clickPoint.x) < this.darg2.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.darg2.x + this.darg2.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg2.x) ||
+            ((e.pageX - this.clickPoint.x) > this.darg2.x && (e.pageX - this.clickPoint.x) < (this.darg2.x + this.darg2.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg2.x) {
+            console.log('在darg2中')
+            if (this.clickData.arrName !== 'arr2') {
+              this.pushType = true
+            } else {
+              this.pushType = false
+            }
+          } else {
+            this.pushType = false
+          }
+          console.log(this.pushType);
+          
         },
         dragUp(e) {
           if (!this.mouseType) {
             return
           }
-          console.log(e)
+          // console.log(e)
+          if (this.pushType) {
+            let arr
+            (this.clickData.arrName === 'arr1' ? arr = 'arr2' : arr = 'arr1')
+            console.log(this.clickData.arrName === 'arr1');
+
+            let item = this[this.clickData.arrName].splice(this.clickData.num, 1)
+            this[arr].push(item[0])
+            // console.log(this[arr]);
+
+          }
           this.mouseType = false
+          this.clickData = {}
           this.dragHtml = ''
+          this.clickPoint = {}
+          this.fixedItemX = {}
+          this.fixedItemY = {}
+
         }
       }
     })
