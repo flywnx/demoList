@@ -83,23 +83,15 @@
           { order: 5, name: 'zhou', drag: true },
           { order: 6, name: 'wu', drag: true },
           { order: 7, name: 'zhen', drag: true },
-          { order: 8, name: 'wang', drag: true },
-          { order: 9, name: 'jiang', drag: true }
+          { order: 8, name: 'wang', drag: true }
         ],
         arr2: [
-          // { order: 9, name: 'meng', drag: true }
+          { order: 9, name: 'meng', drag: true }
         ],
         dragNum: null,
         dragArrayOut: '',
         dragArrayIn: '',
         dragEle: {}
-      },
-      // 列表区域的宽高与距离上左边界的距离
-      mounted() {
-        // let key = Object.keys(this.arr1)
-        // console.log(this.arr1)
-        // console.log(key);
-        
       },
       methods: {
         dragstart(e) {
@@ -108,16 +100,8 @@
         },
         dragover(e) {
           event.preventDefault()
-          // if (this.dargNum) {
-          //   this.dragEle = this[this.dragArrayOut].splice(this.dargNum, 1)[0]
-          // }
-          // this.dargNum = null
         },
         drop(e) {
-          console.log(e);
-
-          // console.log(e.path[0].nodeName ==='LI');
-
           if (e.path[0].nodeName === 'LI') {
             this.dragEle = this[this.dragArrayOut].splice(this.dargNum, 1)[0]
             this.dragArrayIn = e.path[1].dataset.arrname
