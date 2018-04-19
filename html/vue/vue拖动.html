@@ -24,21 +24,22 @@
     }
 
     .drag {
-
+      border: 1px solid #333;
       flex-direction: column;
       align-items: center;
-      width: 10rem;
+      margin: 5rem;
     }
 
     .drag li {
       list-style-type: none;
       padding-left: 2rem;
       height: 2rem;
-      width: 7rem;
+      width: 9rem;
       align-items: center;
       line-height: 2rem;
       border: 1px solid #333;
       user-select: none;
+      box-sizing: border-box;
     }
 
     .drag li span {
@@ -53,44 +54,59 @@
       display: inline-block;
       margin: 0 0.5rem;
     }
-
-    .fixedItem {
-      position: fixed;
-      list-style-type: none;
-      padding-left: 2rem;
-      height: 2rem;
-      width: 7rem;
-      align-items: center;
-      line-height: 2rem;
-      border: 1px solid red;
-      user-select: none;
-    }
-
-    .fixedItem span {
-      text-align: center;
-      background-color: #333;
-      color: #fff;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      font-size: 0.6rem;
-      line-height: 1rem;
-      display: inline-block;
-      margin: 0 0.5rem;
-    }
   </style>
-  <div id="app" @mousedown='dragStart' @mousemove='dragMove' @mouseup='dragUp'>
-    <ul class='drag' id='darg1'>
-      <li v-for='(item,index) in arr1' :data-num='index' data-array='arr1'>
+  <div id="app">
+    <ul class='drag' id='drag1' @dragover='dragover' @drop='drop'>
+      <li v-for='(item,index) in arr1' draggable="true" @dragstart='dragstart' :data-num='index' >
         <span>{{item.order}}</span>{{item.name}}</li>
     </ul>
-    <ul class='drag' id='darg2'>
-      <li v-for='(item,index) in arr2' :data-num='index' data-array='arr1'>
-        <span>{{item.order}}</span>{{item.name}}</li>
-    </ul>
-    <div v-show='mouseType' v-html='dragHtml' class="fixedItem" :style=`top:${fixedItemY}px;left:${fixedItemX}px`></div>
   </div>
   <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        arr1: [
+          { order: 1, name: 'zhao', drag: true },
+          { order: 2, name: 'qian', drag: true },
+          { order: 3, name: 'sun', drag: true },
+          { order: 4, name: 'li', drag: true },
+          { order: 5, name: 'zhou', drag: true },
+          { order: 6, name: 'wu', drag: true },
+          { order: 7, name: 'zhen', drag: true },
+          { order: 8, name: 'wang', drag: true },
+          { order: 9, name: 'jiang', drag: true }
+        ],
+        dargNum: null,
+        parentNode: {}
+      },
+      // 列表区域的宽高与距离上左边界的距离
+      mounted() {
+
+      },
+      methods: {
+        dragstart(e) {
+          console.log(e);
+          this.dargNum = e.target.dataset.num
+          // this.parentNode.w = e.target.parentNode.clientWidth
+          // this.parentNode.h = e.target.parentNode.clientHeight
+          // this.parentNode.cNum = e.target.parentNode.childNodes.length
+          // console.log(this.parentNode);
+        },
+        dragover(e) {
+          event.preventDefault()
+          console.dir(e.target);
+          console.log(e.target.dataset.num);
+          console.log(e.target.clientHeight);
+          
+        },
+        drop(e) {
+          console.log(e);
+          console.dir(e.target.parentNode);
+        }
+      }
+    })
+  </script>
+  <!-- <script>
     var app = new Vue({
       el: '#app',
       data: {
@@ -111,16 +127,16 @@
         fixedItemX: 0,
         fixedItemY: 0,
         clickPoint: {},
-        darg1: {},
-        darg2: {},
+        drag1: {},
+        drag2: {},
         clickData: {},
         pushType: false
       },
       mounted() {
-        let darg1 = document.querySelector('#darg1')
-        this.darg1 = { x: darg1.offsetLeft, y: darg1.offsetTop, w: darg1.offsetWidth, h: darg1.offsetHeight }
-        let darg2 = document.querySelector('#darg2')
-        this.darg2 = { x: darg2.offsetLeft, y: darg2.offsetTop, w: darg2.offsetWidth, h: darg2.offsetHeight }
+        let drag1 = document.querySelector('#drag1')
+        this.drag1 = { x: drag1.offsetLeft, y: drag1.offsetTop, w: drag1.offsetWidth, h: drag1.offsetHeight }
+        let drag2 = document.querySelector('#drag2')
+        this.drag2 = { x: drag2.offsetLeft, y: drag2.offsetTop, w: drag2.offsetWidth, h: drag2.offsetHeight }
       },
       methods: {
         dragStart(e) {
@@ -146,17 +162,17 @@
           }
           this.fixedItemX = e.pageX - this.clickPoint.x
           this.fixedItemY = e.pageY - this.clickPoint.y
-          if ((e.pageX - this.clickPoint.x) < this.darg1.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.darg1.x + this.darg1.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg1.x) ||
-            ((e.pageX - this.clickPoint.x) > this.darg1.x && (e.pageX - this.clickPoint.x) < (this.darg1.x + this.darg1.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg1.x) {
-            console.log('在darg1中')
+          if ((e.pageX - this.clickPoint.x) < this.drag1.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.drag1.x + this.drag1.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag1.x) ||
+            ((e.pageX - this.clickPoint.x) > this.drag1.x && (e.pageX - this.clickPoint.x) < (this.drag1.x + this.drag1.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag1.x) {
+            console.log('在drag1中')
             if (this.clickData.arrName !== 'arr1') {
               this.pushType = true
             } else {
               this.pushType = false
             }
-          } else if ((e.pageX - this.clickPoint.x) < this.darg2.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.darg2.x + this.darg2.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg2.x) ||
-            ((e.pageX - this.clickPoint.x) > this.darg2.x && (e.pageX - this.clickPoint.x) < (this.darg2.x + this.darg2.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.darg2.x) {
-            console.log('在darg2中')
+          } else if ((e.pageX - this.clickPoint.x) < this.drag2.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.drag2.x + this.drag2.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag2.x) ||
+            ((e.pageX - this.clickPoint.x) > this.drag2.x && (e.pageX - this.clickPoint.x) < (this.drag2.x + this.drag2.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag2.x) {
+            console.log('在drag2中')
             if (this.clickData.arrName !== 'arr2') {
               this.pushType = true
             } else {
@@ -193,7 +209,7 @@
         }
       }
     })
-  </script>
+  </script> -->
 </body>
 
 </html>
