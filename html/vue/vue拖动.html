@@ -21,6 +21,7 @@
       display: flex;
       width: 100%;
       justify-content: space-around;
+      align-items: flex-start
     }
 
     .drag {
@@ -28,6 +29,8 @@
       flex-direction: column;
       align-items: center;
       margin: 5rem;
+      min-height: 2rem;
+      width: 9rem;
     }
 
     .drag li {
@@ -54,10 +57,17 @@
       display: inline-block;
       margin: 0 0.5rem;
     }
+    .empty{
+      border: 2px solid #333;
+    }
   </style>
   <div id="app">
-    <ul class='drag' id='drag1' @dragover='dragover' @drop='drop'>
-      <li v-for='(item,index) in arr1' draggable="true" @dragstart='dragstart' :data-num='index' >
+    <ul class='drag' :class="arr1.length===0?'empty':''" id='drag1' @dragover='dragover' @drop='drop' ref='drag' data-arrName='arr1'>
+      <li v-for='(item,index) in arr1' draggable="true" @dragstart='dragstart' :data-num='index'>
+        <span>{{item.order}}</span>{{item.name}}</li>
+    </ul>
+    <ul class='drag' id='drag2':class="arr2.length===0?'empty':''" @dragover='dragover' @drop='drop' ref='drag' data-arrName='arr2'>
+      <li v-for='(item,index) in arr2' draggable="true" @dragstart='dragstart' :data-num='index'>
         <span>{{item.order}}</span>{{item.name}}</li>
     </ul>
   </div>
@@ -76,140 +86,56 @@
           { order: 8, name: 'wang', drag: true },
           { order: 9, name: 'jiang', drag: true }
         ],
-        dargNum: null,
-        parentNode: {}
+        arr2: [
+          // { order: 9, name: 'meng', drag: true }
+        ],
+        dragNum: null,
+        dragArrayOut: '',
+        dragArrayIn: '',
+        dragEle: {}
       },
       // 列表区域的宽高与距离上左边界的距离
       mounted() {
-
+        // let key = Object.keys(this.arr1)
+        // console.log(this.arr1)
+        // console.log(key);
+        
       },
       methods: {
         dragstart(e) {
-          console.log(e);
           this.dargNum = e.target.dataset.num
-          // this.parentNode.w = e.target.parentNode.clientWidth
-          // this.parentNode.h = e.target.parentNode.clientHeight
-          // this.parentNode.cNum = e.target.parentNode.childNodes.length
-          // console.log(this.parentNode);
+          this.dragArrayOut = e.path[1].dataset.arrname
         },
         dragover(e) {
           event.preventDefault()
-          console.dir(e.target);
-          console.log(e.target.dataset.num);
-          console.log(e.target.clientHeight);
-          
+          // if (this.dargNum) {
+          //   this.dragEle = this[this.dragArrayOut].splice(this.dargNum, 1)[0]
+          // }
+          // this.dargNum = null
         },
         drop(e) {
           console.log(e);
-          console.dir(e.target.parentNode);
+
+          // console.log(e.path[0].nodeName ==='LI');
+
+          if (e.path[0].nodeName === 'LI') {
+            this.dragEle = this[this.dragArrayOut].splice(this.dargNum, 1)[0]
+            this.dragArrayIn = e.path[1].dataset.arrname
+            let index = e.target.dataset.num
+            let num
+            e.offsetY / e.path[0].clientHeight < 0.5 ? num = 0 : num = 1
+            this[this.dragArrayIn].splice(parseInt(index) + parseInt(num), 0, this.dragEle)
+          } else if (e.path[0].nodeName === 'UL') {
+            this.dragEle = this[this.dragArrayOut].splice(this.dargNum, 1)[0]
+            this.dragArrayIn = e.path[0].dataset.arrname
+            this[this.dragArrayIn].push(this.dragEle)
+          }
+
         }
       }
     })
   </script>
-  <!-- <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        arr1: [
-          { order: 1, name: 'zhao', fixed: false },
-          { order: 2, name: 'qian', fixed: false },
-          { order: 3, name: 'sun', fixed: false },
-          { order: 4, name: 'li', fixed: false },
-          { order: 5, name: 'zhou', fixed: false },
-          { order: 6, name: 'wu', fixed: false },
-          { order: 7, name: 'zhen', fixed: false },
-          { order: 8, name: 'wang', fixed: false },
-          { order: 9, name: 'jiang', fixed: false }
-        ],
-        arr2: [{ order: 10, name: 'zhang', fixed: false }],
-        mouseType: false,
-        dragHtml: '',
-        fixedItemX: 0,
-        fixedItemY: 0,
-        clickPoint: {},
-        drag1: {},
-        drag2: {},
-        clickData: {},
-        pushType: false
-      },
-      mounted() {
-        let drag1 = document.querySelector('#drag1')
-        this.drag1 = { x: drag1.offsetLeft, y: drag1.offsetTop, w: drag1.offsetWidth, h: drag1.offsetHeight }
-        let drag2 = document.querySelector('#drag2')
-        this.drag2 = { x: drag2.offsetLeft, y: drag2.offsetTop, w: drag2.offsetWidth, h: drag2.offsetHeight }
-      },
-      methods: {
-        dragStart(e) {
-          if (e.target.localName !== 'li') {
-            return
-          }
-          this.mouseType = true
-          // console.log(e.target.dataset)
-          this.clickData = { num: e.target.dataset.num, arrName: e.target.dataset.array, conent: this[e.target.dataset.array][e.target.dataset.num] }
-          console.log(this.clickData);
-          this.dragHtml = e.target.innerHTML
-          this.clickPoint.x = e.offsetX
-          this.clickPoint.y = e.offsetY
-          this.clickPoint.w = e.target.clientWidth
-          this.clickPoint.h = e.target.clientHeight
-          this.fixedItemX = e.pageX - e.offsetX
-          this.fixedItemY = e.pageY - e.offsetY
-          // console.log(this.clickPoint)
-        },
-        dragMove(e) {
-          if (!this.mouseType) {
-            return
-          }
-          this.fixedItemX = e.pageX - this.clickPoint.x
-          this.fixedItemY = e.pageY - this.clickPoint.y
-          if ((e.pageX - this.clickPoint.x) < this.drag1.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.drag1.x + this.drag1.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag1.x) ||
-            ((e.pageX - this.clickPoint.x) > this.drag1.x && (e.pageX - this.clickPoint.x) < (this.drag1.x + this.drag1.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag1.x) {
-            console.log('在drag1中')
-            if (this.clickData.arrName !== 'arr1') {
-              this.pushType = true
-            } else {
-              this.pushType = false
-            }
-          } else if ((e.pageX - this.clickPoint.x) < this.drag2.x && ((e.pageX + this.clickPoint.w - this.clickPoint.x) < (this.drag2.x + this.drag2.w) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag2.x) ||
-            ((e.pageX - this.clickPoint.x) > this.drag2.x && (e.pageX - this.clickPoint.x) < (this.drag2.x + this.drag2.w)) && (e.pageX + this.clickPoint.w - this.clickPoint.x) > this.drag2.x) {
-            console.log('在drag2中')
-            if (this.clickData.arrName !== 'arr2') {
-              this.pushType = true
-            } else {
-              this.pushType = false
-            }
-          } else {
-            this.pushType = false
-          }
-          console.log(this.pushType);
-          
-        },
-        dragUp(e) {
-          if (!this.mouseType) {
-            return
-          }
-          // console.log(e)
-          if (this.pushType) {
-            let arr
-            (this.clickData.arrName === 'arr1' ? arr = 'arr2' : arr = 'arr1')
-            console.log(this.clickData.arrName === 'arr1');
 
-            let item = this[this.clickData.arrName].splice(this.clickData.num, 1)
-            this[arr].push(item[0])
-            // console.log(this[arr]);
-
-          }
-          this.mouseType = false
-          this.clickData = {}
-          this.dragHtml = ''
-          this.clickPoint = {}
-          this.fixedItemX = {}
-          this.fixedItemY = {}
-
-        }
-      }
-    })
-  </script> -->
 </body>
 
 </html>
