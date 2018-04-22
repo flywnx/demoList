@@ -6,168 +6,294 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <style>
+    #piano button{
+      height: 4rem;
+      width: 1.5rem;
+    }
+  </style>
 </head>
 
 <body>
-  <div id='piano'>
-    <button id='do' data-num='0'>do</button>
-    <button id='le' data-num='1'>le</button>
-    <button id='mi' data-num='2'>mi</button>
-    <button id='fa' data-num='3'>fa</button>
-    <button id='so' data-num='4'>so</button>
-    <button id='la' data-num='5'>la</button>
-    <button id='xi' data-num='6'>xi</button>
+  <div id='piano' @mouseover='song'>
+    <button v-for='item in arrFrequency' :data-num='item.key'></button>
   </div>
-  <!-- <button id="button" >经过我</button> -->
   <script>
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    (function () {
-      if (!window.AudioContext) {
-        alert('当前浏览器不支持Web Audio API');
-        return;
-      }
-      // 按钮元素
-      var eleButton = document.getElementById('piano');
+    let piano = new Vue({
+      el: '#piano',
+      data: {
+        arrFrequency: [
+          { key: 0, frequency: "4186.01" },
+          { key: 1, frequency: "3951.07" },
+          { key: 2, frequency: "3729.31" },
+          { key: 3, frequency: "3520" },
+          { key: 4, frequency: "3322.44" },
+          { key: 5, frequency: "3135.96" },
+          { key: 6, frequency: "2959.96" },
+          { key: 7, frequency: "2793.83" },
+          { key: 8, frequency: "2637.02" },
+          { key: 9, frequency: "2489.02" },
+          { key: 10, frequency: "2349.32" },
+          { key: 11, frequency: "2217.46" },
+          { key: 12, frequency: "2093" },
+          { key: 13, frequency: "1975.53" },
+          { key: 14, frequency: "1864.66" },
+          { key: 15, frequency: "1760" },
+          { key: 16, frequency: "1661.22" },
+          { key: 17, frequency: "1567.98" },
+          { key: 18, frequency: "1479.98" },
+          { key: 19, frequency: "1396.91" },
+          { key: 20, frequency: "1318.51" },
+          { key: 21, frequency: "1244.51" },
+          { key: 22, frequency: "1174.66" },
+          { key: 23, frequency: "1108.73" },
+          { key: 24, frequency: "1046.5" },
+          { key: 25, frequency: "987.767" },
+          { key: 26, frequency: "932.328" },
+          { key: 27, frequency: "880" },
+          { key: 28, frequency: "830.609" },
+          { key: 29, frequency: "783.991" },
+          { key: 30, frequency: "739.989" },
+          { key: 31, frequency: "698.456" },
+          { key: 32, frequency: "659.255" },
+          { key: 33, frequency: "622.254" },
+          { key: 34, frequency: "587.33" },
+          { key: 35, frequency: "554.365" },
+          { key: 36, frequency: "523.251" },
+          { key: 37, frequency: "493.883" },
+          { key: 38, frequency: "466.164" },
+          { key: 39, frequency: "440" },
+          { key: 40, frequency: "415.305" },
+          { key: 41, frequency: "391.995" },
+          { key: 42, frequency: "369.994" },
+          { key: 43, frequency: "349.228" },
+          // { key: 44, frequency: "329.628" },
+          // { key: 45, frequency: "311.127" },
+          // { key: 46, frequency: "293.665" },
+          // { key: 47, frequency: "277.183" },
+          // { key: 48, frequency: "261.626" },
+          // { key: 49, frequency: "246.942" },
+          // { key: 50, frequency: "233.082" },
+          // { key: 51, frequency: "220" },
+          // { key: 52, frequency: "207.652" },
+          // { key: 53, frequency: "195.998" },
+          // { key: 54, frequency: "184.997" },
+          // { key: 55, frequency: "174.614" },
+          // { key: 56, frequency: "164.814" },
+          // { key: 57, frequency: "155.563" },
+          // { key: 58, frequency: "146.832" },
+          // { key: 59, frequency: "138.591" },
+          // { key: 60, frequency: "130.813" },
+          // { key: 61, frequency: "123.471" },
+          // { key: 62, frequency: "116.541" },
+          // { key: 63, frequency: "110" },
+          // { key: 64, frequency: "103.826" },
+          // { key: 65, frequency: "97.9989" },
+          // { key: 66, frequency: "92.4986" },
+          // { key: 67, frequency: "87.3071" },
+          // { key: 68, frequency: "82.4069" },
+          // { key: 69, frequency: "77.7817" },
+          // { key: 70, frequency: "73.4162" },
+          // { key: 71, frequency: "69.2957" },
+          // { key: 72, frequency: "65.4064" },
+          // { key: 73, frequency: "61.7354" },
+          // { key: 74, frequency: "58.2705" },
+          // { key: 75, frequency: "55" },
+          // { key: 76, frequency: "51.9131" },
+          // { key: 77, frequency: "48.9994" },
+          // { key: 78, frequency: "46.2493" },
+          // { key: 79, frequency: "43.6535" },
+          // { key: 80, frequency: "41.2034" },
+          // { key: 81, frequency: "38.8909" },
+          // { key: 82, frequency: "36.7081" },
+          // { key: 83, frequency: "34.6478" },
+          // { key: 84, frequency: "32.7032" },
+          // { key: 85, frequency: "30.8677" },
+          // { key: 86, frequency: "29.1352" },
+          // { key: 87, frequency: "27.5" }
+        ],
+        audioCtx: null,
+      },
+      methods: {
+        song(e) {
+          // 创建新的音频上下文接口
+          // var audioCtx = new AudioContext();
+          console.log(e);
+          if (e.path[0].nodeName !== 'BUTTON') {
+            return
+          }
+          let start = e.path[0].dataset.num
 
-      // 创建新的音频上下文接口
-      var audioCtx = new AudioContext();
+          let frequency = this.arrFrequency[start];
 
-      // 发出的声音频率数据，表现为音调的高低
-      var arrFrequency = [
-        { key: 0, frequency: "4186.01" },
-        { key: 1, frequency: "3951.07" },
-        { key: 2, frequency: "3729.31" },
-        { key: 3, frequency: "3520" },
-        { key: 4, frequency: "3322.44" },
-        { key: 5, frequency: "3135.96" },
-        { key: 6, frequency: "2959.96" },
-        { key: 7, frequency: "2793.83" },
-        { key: 8, frequency: "2637.02" },
-        { key: 9, frequency: "2489.02" },
-        { key: 10, frequency: "2349.32" },
-        { key: 11, frequency: "2217.46" },
-        { key: 12, frequency: "2093" },
-        { key: 13, frequency: "1975.53" },
-        { key: 14, frequency: "1864.66" },
-        { key: 15, frequency: "1760" },
-        { key: 16, frequency: "1661.22" },
-        { key: 17, frequency: "1567.98" },
-        { key: 18, frequency: "1479.98" },
-        { key: 19, frequency: "1396.91" },
-        { key: 20, frequency: "1318.51" },
-        { key: 21, frequency: "1244.51" },
-        { key: 22, frequency: "1174.66" },
-        { key: 23, frequency: "1108.73" },
-        { key: 24, frequency: "1046.5" },
-        { key: 25, frequency: "987767" },
-        { key: 26, frequency: "932.328" },
-        { key: 27, frequency: "880" },
-        { key: 28, frequency: "830.609" },
-        { key: 29, frequency: "783,991" },
-        { key: 30, frequency: "739,989" },
-        { key: 31, frequency: "698-456" },
-        { key: 32, frequency: "659.255" },
-        { key: 33, frequency: "622.254" },
-        { key: 34, frequency: "587.33" },
-        { key: 35, frequency: "554.365" },
-        { key: 36, frequency: "523.251" },
-        { key: 37, frequency: "493-883" },
-        { key: 38, frequency: "466.164" },
-        { key: 39, frequency: "440" },
-        { key: 40, frequency: "415,305" },
-        { key: 41, frequency: "391.995" },
-        { key: 42, frequency: "369.994" },
-        { key: 43, frequency: "349.228" },
-        { key: 44, frequency: "329.628" },
-        { key: 45, frequency: "311,127" },
-        { key: 46, frequency: "293.665" },
-        { key: 47, frequency: "277.183" },
-        { key: 48, frequency: "261.626" },
-        { key: 49, frequency: "246.942" },
-        { key: 50, frequency: "233.082" },
-        { key: 51, frequency: "220" },
-        { key: 52, frequency: "207.652" },
-        { key: 53, frequency: "195.998" },
-        { key: 54, frequency: "184.997" },
-        { key: 55, frequency: "174.614" },
-        { key: 56, frequency: "164.814" },
-        { key: 57, frequency: "155.563" },
-        { key: 58, frequency: "146.832" },
-        { key: 59, frequency: "138.591" },
-        { key: 60, frequency: "130,813" },
-        { key: 61, frequency: "123.471" },
-        { key: 62, frequency: "116.541" },
-        { key: 63, frequency: "110" },
-        { key: 64, frequency: "103.826" },
-        { key: 65, frequency: "97.9989" },
-        { key: 66, frequency: "92.4986" },
-        { key: 67, frequency: "87.3071" },
-        { key: 68, frequency: "82.4069" },
-        { key: 69, frequency: "777817" },
-        { key: 70, frequency: "73.4162" },
-        { key: 71, frequency: "69.2957" },
-        { key: 72, frequency: "65-4064" },
-        { key: 73, frequency: "61.7354" },
-        { key: 74, frequency: "58.2705" },
-        { key: 75, frequency: "55" },
-        { key: 76, frequency: "51.9131" },
-        { key: 77, frequency: "48.9994" },
-        { key: 78, frequency: "46.2493" },
-        { key: 79, frequency: "43.6535" },
-        { key: 80, frequency: "41.2034" },
-        { key: 81, frequency: "38.8909" },
-        { key: 82, frequency: "367081" },
-        { key: 83, frequency: "34.6478" },
-        { key: 84, frequency: "327032" },
-        { key: 85, frequency: "30-8677" },
-        { key: 86, frequency: "29.1352" },
-        { key: 87, frequency: "27.5" }]
-
-      // 音调依次递增或者递减处理需要的参数
-      // var start = 0, direction = 1;
-      // var start = 6
-      // 鼠标hover我们的按钮的时候
-      eleButton.addEventListener('click', function (e) {
-        console.log(e);
-        if (e.path[0].nodeName !== 'BUTTON') {
-          return
+          // 创建一个OscillatorNode, 它表示一个周期性波形（振荡），基本上来说创造了一个音调
+          var oscillator = this.audioCtx.createOscillator();
+          // 创建一个GainNode,它可以控制音频的总音量
+          var gainNode = this.audioCtx.createGain();
+          // 把音量，音调和终节点进行关联
+          oscillator.connect(gainNode);
+          // audioCtx.destination返回AudioDestinationNode对象，表示当前audio context中所有节点的最终节点，一般表示音频渲染设备
+          gainNode.connect(this.audioCtx.destination);
+          // 指定音调的类型，其他还有square|triangle|sawtooth
+          oscillator.type = 'sine';
+          // 设置当前播放声音的频率，也就是最终播放声音的调调
+          oscillator.frequency.value = frequency.frequency;
+          // 当前时间设置音量为0
+          gainNode.gain.setValueAtTime(0, this.audioCtx.currentTime);
+          // 0.01秒后音量为1
+          gainNode.gain.linearRampToValueAtTime(1, this.audioCtx.currentTime + 0.01);
+          // 音调从当前时间开始播放
+          oscillator.start(this.audioCtx.currentTime);
+          // 1秒内声音慢慢降低，是个不错的停止声音的方法
+          gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 1);
+          // 1秒后完全停止声音
+          oscillator.stop(this.audioCtx.currentTime + 1);
         }
-        let start = e.path[0].dataset.num
-        // 当前频率
-        // var frequency = arrFrequency[start];
-        // // 如果到头，改变音调的变化规则（增减切换）
-        // if (!frequency) {
-        //   direction = -1 * direction;
-        //   start = start + 2 * direction;
-        frequency = arrFrequency[start];
-        // }
-        // // 改变索引，下一次hover时候使用
-        // start = start + direction;
+      },
+      created() {
+        this.audioCtx = new AudioContext();
+      }
+    })
+  </script>
+  <script>
+    // window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    // (function () {
+    //   if (!window.AudioContext) {
+    //     alert('当前浏览器不支持Web Audio API');
+    //     return;
+    //   }
+    //   // 按钮元素
+    //   var eleButton = document.getElementById('piano');
 
-        // 创建一个OscillatorNode, 它表示一个周期性波形（振荡），基本上来说创造了一个音调
-        var oscillator = audioCtx.createOscillator();
-        // 创建一个GainNode,它可以控制音频的总音量
-        var gainNode = audioCtx.createGain();
-        // 把音量，音调和终节点进行关联
-        oscillator.connect(gainNode);
-        // audioCtx.destination返回AudioDestinationNode对象，表示当前audio context中所有节点的最终节点，一般表示音频渲染设备
-        gainNode.connect(audioCtx.destination);
-        // 指定音调的类型，其他还有square|triangle|sawtooth
-        oscillator.type = 'sine';
-        // 设置当前播放声音的频率，也就是最终播放声音的调调
-        oscillator.frequency.value = frequency;
-        // 当前时间设置音量为0
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        // 0.01秒后音量为1
-        gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.01);
-        // 音调从当前时间开始播放
-        oscillator.start(audioCtx.currentTime);
-        // 1秒内声音慢慢降低，是个不错的停止声音的方法
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
-        // 1秒后完全停止声音
-        oscillator.stop(audioCtx.currentTime + 1);
-      });
-    })();
+    //   // 创建新的音频上下文接口
+    //   var audioCtx = new AudioContext();
+
+    //   // 发出的声音频率数据，表现为音调的高低
+    //   var arrFrequency = [
+    //     { key: 0, frequency: "4186.01" },
+    //     { key: 1, frequency: "3951.07" },
+    //     { key: 2, frequency: "3729.31" },
+    //     { key: 3, frequency: "3520" },
+    //     { key: 4, frequency: "3322.44" },
+    //     { key: 5, frequency: "3135.96" },
+    //     { key: 6, frequency: "2959.96" },
+    //     { key: 7, frequency: "2793.83" },
+    //     { key: 8, frequency: "2637.02" },
+    //     { key: 9, frequency: "2489.02" },
+    //     { key: 10, frequency: "2349.32" },
+    //     { key: 11, frequency: "2217.46" },
+    //     { key: 12, frequency: "2093" },
+    //     { key: 13, frequency: "1975.53" },
+    //     { key: 14, frequency: "1864.66" },
+    //     { key: 15, frequency: "1760" },
+    //     { key: 16, frequency: "1661.22" },
+    //     { key: 17, frequency: "1567.98" },
+    //     { key: 18, frequency: "1479.98" },
+    //     { key: 19, frequency: "1396.91" },
+    //     { key: 20, frequency: "1318.51" },
+    //     { key: 21, frequency: "1244.51" },
+    //     { key: 22, frequency: "1174.66" },
+    //     { key: 23, frequency: "1108.73" },
+    //     { key: 24, frequency: "1046.5" },
+    //     { key: 25, frequency: "987767" },
+    //     { key: 26, frequency: "932.328" },
+    //     { key: 27, frequency: "880" },
+    //     { key: 28, frequency: "830.609" },
+    //     { key: 29, frequency: "783,991" },
+    //     { key: 30, frequency: "739,989" },
+    //     { key: 31, frequency: "698-456" },
+    //     { key: 32, frequency: "659.255" },
+    //     { key: 33, frequency: "622.254" },
+    //     { key: 34, frequency: "587.33" },
+    //     { key: 35, frequency: "554.365" },
+    //     { key: 36, frequency: "523.251" },
+    //     { key: 37, frequency: "493-883" },
+    //     { key: 38, frequency: "466.164" },
+    //     { key: 39, frequency: "440" },
+    //     { key: 40, frequency: "415,305" },
+    //     { key: 41, frequency: "391.995" },
+    //     { key: 42, frequency: "369.994" },
+    //     { key: 43, frequency: "349.228" },
+    //     { key: 44, frequency: "329.628" },
+    //     { key: 45, frequency: "311,127" },
+    //     { key: 46, frequency: "293.665" },
+    //     { key: 47, frequency: "277.183" },
+    //     { key: 48, frequency: "261.626" },
+    //     // { key: 49, frequency: "246.942" },
+    //     // { key: 50, frequency: "233.082" },
+    //     // { key: 51, frequency: "220" },
+    //     // { key: 52, frequency: "207.652" },
+    //     // { key: 53, frequency: "195.998" },
+    //     // { key: 54, frequency: "184.997" },
+    //     // { key: 55, frequency: "174.614" },
+    //     // { key: 56, frequency: "164.814" },
+    //     // { key: 57, frequency: "155.563" },
+    //     // { key: 58, frequency: "146.832" },
+    //     // { key: 59, frequency: "138.591" },
+    //     // { key: 60, frequency: "130,813" },
+    //     // { key: 61, frequency: "123.471" },
+    //     // { key: 62, frequency: "116.541" },
+    //     // { key: 63, frequency: "110" },
+    //     // { key: 64, frequency: "103.826" },
+    //     // { key: 65, frequency: "97.9989" },
+    //     // { key: 66, frequency: "92.4986" },
+    //     // { key: 67, frequency: "87.3071" },
+    //     // { key: 68, frequency: "82.4069" },
+    //     // { key: 69, frequency: "777817" },
+    //     // { key: 70, frequency: "73.4162" },
+    //     // { key: 71, frequency: "69.2957" },
+    //     // { key: 72, frequency: "65-4064" },
+    //     // { key: 73, frequency: "61.7354" },
+    //     // { key: 74, frequency: "58.2705" },
+    //     // { key: 75, frequency: "55" },
+    //     // { key: 76, frequency: "51.9131" },
+    //     // { key: 77, frequency: "48.9994" },
+    //     // { key: 78, frequency: "46.2493" },
+    //     // { key: 79, frequency: "43.6535" },
+    //     // { key: 80, frequency: "41.2034" },
+    //     // { key: 81, frequency: "38.8909" },
+    //     // { key: 82, frequency: "367081" },
+    //     // { key: 83, frequency: "34.6478" },
+    //     // { key: 84, frequency: "327032" },
+    //     // { key: 85, frequency: "30-8677" },
+    //     // { key: 86, frequency: "29.1352" },
+    //     // { key: 87, frequency: "27.5" }]
+
+
+    //   eleButton.addEventListener('mouseover', function (e) {
+    //     console.log(e);
+    //     if (e.path[0].nodeName !== 'BUTTON') {
+    //       return
+    //     }
+    //     let start = e.path[0].dataset.num
+
+    //     let frequency = arrFrequency[start];
+
+    //     // 创建一个OscillatorNode, 它表示一个周期性波形（振荡），基本上来说创造了一个音调
+    //     var oscillator = audioCtx.createOscillator();
+    //     // 创建一个GainNode,它可以控制音频的总音量
+    //     var gainNode = audioCtx.createGain();
+    //     // 把音量，音调和终节点进行关联
+    //     oscillator.connect(gainNode);
+    //     // audioCtx.destination返回AudioDestinationNode对象，表示当前audio context中所有节点的最终节点，一般表示音频渲染设备
+    //     gainNode.connect(audioCtx.destination);
+    //     // 指定音调的类型，其他还有square|triangle|sawtooth
+    //     oscillator.type = 'sine';
+    //     // 设置当前播放声音的频率，也就是最终播放声音的调调
+    //     oscillator.frequency.value = frequency.frequency;
+    //     // 当前时间设置音量为0
+    //     gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    //     // 0.01秒后音量为1
+    //     gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.01);
+    //     // 音调从当前时间开始播放
+    //     oscillator.start(audioCtx.currentTime);
+    //     // 1秒内声音慢慢降低，是个不错的停止声音的方法
+    //     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+    //     // 1秒后完全停止声音
+    //     oscillator.stop(audioCtx.currentTime + 1);
+    //   });
+    // })();
   </script>
 </body>
 
