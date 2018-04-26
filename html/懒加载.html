@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+
+    }
+
+    li {
+      width: 50%;
+      list-style: none;
+    }
+
+    img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <ul>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/442_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/441_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/436_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/446_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/447_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/246_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/346_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/411_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/406_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/426_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/422_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/423_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/428_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/431_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/439_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/417_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/410_1.jpg">
+      </li>
+      <li>
+        <img class="layzLoad" data-src="https://gratisography.com/pictures/427_1.jpg">
+      </li>
+    </ul>
+  </div>
+</body>
+<script>
+  let imgList = [...document.querySelectorAll('.layzLoad')]
+  function layzLoad() {
+    console.log(imgList.length);
+    
+    imgList.filter((item) => {
+      if ((item.offsetTop - window.scrollY) <= window.innerHeight) {
+        item.src = item.dataset.src
+        return false
+      }
+      return true
+    })
+    console.log(imgList);
+    
+  }
+  layzLoad()
+  window.onscroll = () => {
+    if (imgList.length) {
+      layzLoad()
+    }
+
+  }
+</script>
+
+</html>
