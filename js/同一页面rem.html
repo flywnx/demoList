@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html style=" --rem: 36px;font-size: var(--rem, 24px)">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <p>将页面宽度分为750部分，通过JS取得视口宽度，进行设置html标签下的font-size</p>
+  <script>
+    window.onresize = () => {
+      changeRem()
+    }
+    function changeRem(params) {
+      document.querySelector('html').style.setProperty('--rem', (document.body.clientWidth / 750) * 24 + 'px')
+    }
+    changeRem()
+  </script>
+</body>
+
+</html>
