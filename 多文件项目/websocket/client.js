@@ -3,11 +3,11 @@ let ws = new WebSocket('ws://localhost:8090/test');
 
 // 打开WebSocket连接后立刻发送一条消息:
 ws.on('open', function () {
-  console.log(`[CLIENT] open()`);
-  ws.send('Hello!');
+  ws.send(1007);
 });
 
 // 响应收到的消息:
 ws.on('message', function (message) {
-  console.log(`[CLIENT] Received: ${message}`);
+  // ws.send(1008);
+  console.log(message);
 })
