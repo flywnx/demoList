@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>断裂的字体</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .text {
+      color: #FC466B;
+      font-weight: bold;
+      font-size: 2rem;
+      height: 2rem;
+      display: block;
+    }
+
+    .clip::before {
+      content: attr(data-text);
+      position: absolute;
+      clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
+      transform: rotate(0deg)translateX(0rem);
+      transform-origin: 50% 50%;
+      transition: .3s all;
+    }
+
+    .clip::after {
+      content: attr(data-text);
+      position: absolute;
+      clip-path: polygon(60% 0,100% 0, 100% 100%,30% 100%);
+      transform: rotate(0deg)translateX(0rem);
+      transform-origin: 50% 50%;
+      transition: .3s all;
+    }
+     .clip:hover:before{
+      transform: rotate(-30deg)translateX(-1rem);
+    }
+    .clip:hover:after{
+      transform: rotate(30deg)translateX(1rem);
+    }
+   
+
+  </style>
+</head>
+
+<body>
+  <div>
+    <span class="text clip" data-text="这是一座桥"></span>
+  </div>
+</body>
+
+</html>
