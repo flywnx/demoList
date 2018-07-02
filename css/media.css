@@ -1,0 +1,19 @@
+/*PC电脑*/
+
+@media screen and (min-width:1200px) {}
+
+/* 平板 */
+
+@media screen and (min-width:992px) {}
+
+/* 大屏手机 */
+
+@media screen and (min-width:768px) {}
+
+/* 小屏手机 */
+
+@media screen and (min-width:480px) {
+  .main {
+    display: flex;
+  }
+}
