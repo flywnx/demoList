@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    section {
+      margin: 5rem;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    input {
+      border: none;
+      text-align: center;
+      border-bottom: 1px solid #333;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+    }
+
+    input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section>
+      <input>
+      <input>
+      <input>
+      <input>
+    </section>
+  </main>
+</body>
+<script>
+  ~function () {
+    let ins = [...document.querySelectorAll('input')]
+    ins.forEach((item, index, array) => {
+      if (index === 0) {
+        ins[0][`autofocus`] = `autofocus`
+      }
+      item.addEventListener('input', (e) => {
+        console.log(e);
+        console.log(ins);
+        console.log(item);
+        if (index < array.length - 1) {
+          if (e.data.length > 0) {
+            item.blur()
+            array[index + 1].focus()
+          }
+        } else {
+          item.addEventListener('keyup', (e) => {
+            console.log(e);
+            alert('完成')
+          })
+        }
+      })
+    })
+
+
+
+  }()
+</script>
+
+</html>
