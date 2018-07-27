@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滤镜</title>
+    <style>
+        body img{
+            width:500px;
+        }
+        span {
+            width: 100px;
+            display: inline-block;
+        }
+        .filter1{
+            filter: blur(3px);
+        }
+        .filter2{
+            filter: brightness(2);
+        }
+        .filter3{
+            filter: contrast(2);
+        }
+        .filter4{
+            filter: drop-shadow(4px 4px 6px #333);
+        }
+        .filter5{
+            box-shadow: 4px 4px 6px #333;
+        }
+        .filter6{
+            filter: grayscale(.8);
+        }
+        .filter7{
+            filter:hue-rotate(25deg);
+        }
+        .filter8{
+            filter: invert(75%);
+        }
+        .filter9{
+            filter: opacity(50%);
+        }
+        .filter10{
+            filter: saturate(15%);
+        }
+        .filter11{
+            filter:sepia(.74);
+        }
+        .filter12{
+            filter: opacity(80%) blur(2px) sepia(35%);
+        }
+
+
+    </style>
+</head>
+<body>
+    <img src="img/1.jpg" ><span>正常</span>
+    <img src="img/1.jpg" class="filter1" alt="blur"><span>模糊</span>
+    <img src="img/1.jpg" class="filter2" alt=" brightness"><span>亮度</span>
+    <img src="img/1.jpg" class="filter3" alt="contrast"><span>对比度</span>
+    <img src="img/1.jpg" class="filter4" alt="drop-shadow"><span>drop-shadow兼容性较差</span>
+    <img src="img/1.jpg" class="filter5" alt="box-shadow"><span>box-shadow与drop-shadow对比</span>
+    <img src="img/1.jpg" class="filter6" alt="grayscale"><span>灰度化</span>
+    <img src="img/1.jpg" class="filter7" alt="grayscale"><span>色轮角度变化来改变颜色</span>
+    <img src="img/1.jpg" class="filter8" alt="invert"><span>反色</span>
+    <img src="img/1.jpg" class="filter9" alt="opacity"><span>透明</span>
+    <img src="img/1.jpg" class="filter10" alt="saturate"><span>饱和度</span>
+    <img src="img/1.jpg" class="filter11" alt="sepia"><span>褐色滤镜</span>
+    <img src="img/1.jpg" class="filter12"><span>多重滤镜</span>
+</body>
+</html>

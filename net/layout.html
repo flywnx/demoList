@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>布局1</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .all {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .head{
+            height: 130px;
+            width: 100%;
+            background-color: #6b54d3;
+        }
+        .middle{
+            width: 100%;
+            font-size: 0rem;
+            position: relative;
+        }
+        .left{
+            height: 400px;
+            position: absolute;
+            width: 200px;
+            left: -200px;
+            font-size: 1rem;
+            transition: left .3s;
+            background-color: #009de4;
+        }
+        @media (min-width: 40rem) {
+            .left{
+                background-color: #009de4;
+                display: inline-block;
+                width: 25%;
+                left: 0;
+                height: 400px;
+                position: relative;
+            }
+        }
+        .center {
+            width: 100%;
+            height: 400px;
+            background-color: #ff9900;
+            font-size: 1rem;
+        }
+        @media (min-width: 40rem) {
+            .center {
+                background-color: #ff9900;
+                display: inline-block;
+                width: 60%;
+                height: 400px;
+                font-size: 1rem;
+            }
+        }
+        .right {
+            width: 100%;
+            height: 400px;
+            background-color: #009de4;
+        font-size: 1rem;
+        }
+        @media (min-width: 40rem) {
+            .right {
+                background-color: #009de4;
+                display: inline-block;
+                width: 15%;
+                height: 400px;
+                font-size: 1rem;
+            }
+        }
+        .foot{
+            height: 130px;
+            width: 100%;
+            background-color: #6b54d3;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="all">
+        <div class="head">head(收缩之后此处可点击)</div>
+        <div class="middle">
+            <div class="left">导航栏</div>
+            <div class="center">正文</div>
+            <div class="right">辅助</div>
+        </div>
+
+        <div class="foot">脚</div>
+    </div>
+</body>
+<script>
+    document.querySelector(".head").onclick = function() {
+        var w =  document.body.clientWidth;
+        console.log(w);
+        if(w>=640){
+            return
+        }
+        var lefts =  document.querySelector('.left').style.left;
+        console.log( lefts);
+        console.log( lefts == "-200px" );
+        if(lefts =="0px"){
+
+            document.querySelector('.left').style.left = "-200px";
+            console.log( lefts);
+        }else{
+            document.querySelector('.left').style.left = "0px";
+            console.log( lefts);
+        }
+
+    };
+</script>
+</html>

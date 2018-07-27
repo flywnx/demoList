@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>抛物线</title>
+  <style type="text/css" media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      width: 100%;
+      height: 100vh;
+      background: #333;
+    }
+    main div{
+      width: 80px;
+      height: 80px;
+      position: fixed;
+      bottom: 0;
+      background: blue;
+      border-radius: 50%;
+      z-index: 2;
+      text-align: center;
+      line-height: 80px;
+    }
+    main span {
+      border: 5px solid red;
+      border-radius: 50%;
+      display: block;
+      width: 0;
+      position: fixed;
+      transition: top .5s cubic-bezier(0.4, 0, 1, 1), left .5s linear;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <section>
+     <main>
+        <h2>点击进行抛物</h2>
+        <div>垃圾桶</div>
+      </main>
+  </section>
+  <script>
+    let section = document.getElementsByTagName('section')[0]
+    let main = document.querySelectorAll('main')[0]
+    let point = document.createElement('span')
+    section.addEventListener('mousedown', (e) => {
+      if (document.querySelectorAll('span')[0]) {
+        main.removeChild(point)
+      }
+      point.style.top = e.pageY + 'px'
+      point.style.left = e.pageX + 'px'
+      document.getElementsByTagName('main')[0].appendChild(point)
+    })
+
+    section.addEventListener('mouseup', () => {
+      let div = document.querySelectorAll('div')[0]
+      // console.log(document.documentElement.clientHeight)
+      point.style.top = (document.documentElement.clientHeight - div.clientHeight / 2) + 'px'
+      point.style.left = (div.clientWidth / 2 ) + 'px'
+    })
+  </script>
+</body>
+</html>

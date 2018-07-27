@@ -1,0 +1,29 @@
+1.这次我下载了别人的项目，遇到的第一个问题就是在npm install 时 关于package.json的配置报错问题，这个因为之前有过了解，按照报错提示，
+  更改配置选项（需不需要更改版本这个就不太清楚了）
+  例如：我遇到是：
+	npm WARN deprecated autoprefixer-loader@3.2.0: Please use postcss-loader instead of autoprefixer-loader
+	npm WARN deprecated babel-preset-es2015@6.24.1: ??  Thanks for using Babel: we recommend using babel-preset-env now: please read babeljs.io/env to update!
+	第一条：我就是按照提示把package.json中的autoprefixer-loader 换成了 postcss-loader 
+	其实第二条也是babel-preset-es2015 换成 babel-preset-env
+	这里要说的一点是 你换了之后的配置版本也要相应的改变
+	
+2.刚我操作了以上操作之后我这报了一个错 Error: listen EADDRINUSE :::8001 。这个呢因为我一直使用vue run dev 启动的开了一个之后没关掉，
+  原来的端口就一直被占用着，所以无法启动。我的解决方法是（我是win10）打开任务管理器中的详细信息，然后有node.exe的服务关闭它就可以了。
+  这里再说一点就是修改项目的端口号是在../项目目录/config/index.js中的port属性
+  
+3.没错！接下来项目依然在报错，这会是这样的报错：
+  Module build failed: Error: Couldn't find preset "es2015" relative to directory
+
+  看到"es2015"是不是有点眼熟，没错就是因为第一步的时候我修改了关于babel相关的配置，所以在项目与babel相关的.babelrc文件就需要重新配置了。
+  关于我修改的原配置是：
+	"presets": ["es2015", "stage-2"]
+	我改成了：
+	"presets": ["env", "stage-2"]
+
+4.接下来 是我运行别人vue项目的最后一个报错：
+  ERROR in Cannot find module 'node-sass'
+  我百度的结果是 因为cnpm 安装导致的，有两个方法用1：npm安装，2.运行cnpm install node-sass@latest
+
+5.这是我第一次运行的经过，这样一看写下来只不过几百个字,可我却解决了2个多小时~~~~
+  
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3d</title>
+    <style>
+        .all{
+            border: 1px solid #333333;
+            width: 600px;
+            height: 600px;
+        }
+        .f{
+            background-color: #ff9900;
+            height: 120px;
+            width: 100%;
+            text-align: center;
+            line-height: 120px;
+            margin: 40px 0;
+        }
+        .s{
+            margin: 40px 0;
+            background-color: #555555;
+            color: #ffffff;
+            height: 120px;
+            width: 100%;
+            text-align: center;
+            line-height: 120px;
+        }
+        .f:hover {
+            transform: rotateX(160deg) ;
+        }
+        .s:hover {
+             transform: rotateY(160deg) ;
+         }
+        .t{
+            animation: fill 3s 1s infinite alternate both;
+            height: 120px;
+            width: 100%;
+            text-align: center;
+            line-height: 120px;
+            margin: 40px 0;
+            background-color: blue;
+            animation-fill-mode: both;
+        }
+        @keyframes fill {
+            0%{
+                background-color: yellow;
+            }
+            100%{
+                background-color: red;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="all">
+        <div class="f">The Front</div>
+        <div class="s">The back</div>
+        <div class="t">The end</div>
+    </div>
+</body>
+</html>

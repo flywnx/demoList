@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>vue练习</title>
+	<script src="js/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+
+</head>
+<body>
+	<div id="app"><p>{{message}}</p></div>
+	<div id="app-2">
+	  <span v-bind:title="message">
+	    Hover your mouse over me for a few seconds to see my dynamically bound title!
+	  </span>
+	</div>
+	<div id="app-3">
+	  <p v-if="seen">Now you see me</p>
+	</div>
+	<div id="app-4">
+	  <ol>
+	    <li v-for="todo in todos">
+	      {{ todo.texts }}
+	      {{ todo.text }}
+	    </li>
+	  </ol>
+	</div>
+	<div id="app-5">
+	  <p>{{ message }}</p>
+	  <button v-on:click="reverseMessage">Reverse Message</button>
+	</div>
+	<div id="app-6">
+	  <p>{{ message }}</p>
+	  <input v-model="message">
+	</div>
+	<div id="app-7">
+	  <ol>
+	    <!-- Now we provide each todo-item with the todo object    -->
+	    <!-- it's representing, so that its content can be dynamic -->
+	    <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+	  </ol>
+	</div>
+
+	<div id="app-8">
+	  <ol>
+	    <!--
+	      现在我们为每个 todo-item 提供 todo 对象
+	      todo 对象是变量，即其内容可以是动态的。
+	      我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
+	    -->
+	    <todo-item
+	      v-for="item in groceryList"
+	      v-bind:todo="item"
+	      v-bind:key="item.id">
+	    </todo-item>
+	  </ol>
+	</div>	
+	<div id="jl">
+		<span v-once>{{msg}}</span>
+		<p>v-once 属性 可以实现一次性数据插入 即取消双向绑定</p>
+		<div v-html="rawHtml"></div>
+		<p>v-html 输出普通文本 </p>
+		<p :id="lsgo"> v-bind 定制DOM属性 缩略写法“:” </p>
+		<p>是用JS表达式{{num>5?msg:rawHtml}}</p>
+		<p>{{msg}}</p>
+		<p>{{reversedMessage }}</p>
+		<p>{{reversedMessages()}}</p>
+		<p :style="[base,overr]">计算属性只在依赖变量发生改变时重新计算，而方法是在每次调用时都会重新计算</p>
+		<div class="static" v-bind:class="classList" :style="styleObject">
+		     <p>css属性用驼峰或者短横线分隔来命名（用短横要加单引号）</p>
+		</div>
+	</div>
+	<div id="watch-example">
+	  <p>
+	    Ask a yes/no question:
+	    <input v-model="question">
+	  </p>
+	  <p>{{ answer }}</p>
+	</div>
+	<div id="tj">
+		<template v-if="ok">
+		  <h1>Title</h1>
+		  <p>Paragraph 1</p>
+		  <p>Paragraph 2</p>
+		</template>
+		<p>↑template标签 可以当做包装元素 配合v-if条件渲染一整组</p>
+		<div v-if="Math.random() > 0.5">
+		  Now you see me
+		</div>
+		<div v-else>
+		  Now you don't
+		</div>
+		<p>v-else 元素必须紧跟着v-if或者v-else-if元素之后--否则不会被识别</p>
+		<template v-if="loginType === 'username'">
+		  <label>Username</label>
+		  <input placeholder="Enter your username" key="username-input">
+		</template>
+		<template v-else>
+		  <label>Email</label>
+		  <input placeholder="Enter your email address" key="email-input">
+		</template>
+		<h1 v-show='ok'>Hello!</h1>
+		<p>v-show 通过切换元素display 来实现显示隐藏</p>
+		<p>v-if 与v-show比较： v-if在初始渲染时只有第一次满足条件才会被渲染，进而显示出来；而v-show是在初始渲染是就已经渲染好，然后通过css的切换来实现显隐 </p>
+		
+		<template v-for="its in itList" >
+		  	<p :key="its.index">{{its.name}}</p>
+		  	<p>★★★★★</p>
+		</template>
+		<p>当v-for 与v-if 在同一个元素中时	v-for优先级高于v-if</p>
+	</div>
+	<h1>由于javaScript限制数组与对象的动态修改 无法动态响应；需要使用特殊方法：https://cn.vuejs.org/v2/guide/list.html#注意事项</h1>
+	<div id="ky">
+		<template>
+			<ul>
+				<li v-for="n in even(number)">{{n}}</li>
+			</ul>
+		</template>	
+	</div>
+	<div id="todo-list-example">
+	  <input
+	    v-model="newTodoText"
+	    v-on:keyup.enter="addNewTodo"
+	    placeholder="Add a todo"
+	  >
+	  <ul>
+	    <li
+	      is="todo-item"
+	      v-for="(todo, index) in todos"
+	      v-bind:key="todo.id"
+	      v-bind:title="todo.title"
+	      v-on:remove="todos.splice(index, 1)"
+	    ></li>
+	  </ul>
+	</div>
+	<div id="example-1">
+	  <button v-on:click="counter += 1">增加 1</button>
+	  <p>这个按钮被点击了 {{ counter }} 次。</p>
+	</div>
+	<div id="example-2">
+	  <!-- `greet` 是在下面定义的方法名 -->
+	  <button v-on:click="greet">Greet</button>
+	</div>
+</body>
+<script src="js/try_vue.js"></script>
+</html>

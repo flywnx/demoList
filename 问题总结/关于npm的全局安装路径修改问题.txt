@@ -1,0 +1,24 @@
+当你刚安装好nodejs的时候程序的npm全局路径是C:\User\admin\AppData\Roaming\npm(此处的admin会因品牌不同而变化请自行查看)
+
+装在C:\时间一长装的东西多了更新受不了，所以我们要更改npm的全局安装路径
+
+我已开始百度东看一个西看一个，把自己都绕晕了。
+
+第一步当然是安装nodejs（去官网自己下去），傻瓜安装成功之后,接下来我们要打开cmd也好gitbas也行（我推荐gitbas方便，谁用谁知道），进入安装目录，
+确认nodejs（$nodejs -v）与npm（$npm -v）成功安装（此处括号里的$是gitbas命令行前缀无需输入），输出的是相应版本号而不是报错时，那你第一步完成了
+
+然后安装点东西看看我们的东西安装在哪里，$npm install vue（这里的vue可以换成任何你想要的gulp,express都行，在这只是个例子），这时你安装完了之后我们去上述的那个C:\地址，
+东西是不是就在那，我们不想要这样的结果对不对，接下来！
+
+开始删除了C:\中的那个默认文件（由于卸载安装了很多次，所以删除起来很泄愤~），此处是将整个npm删除。
+
+在gitbas里输入$npm root -g 或者 $npm config ls（prefix那项就是）查看npm全局安装路径，是不是还是你删除的那个路径，这就对了改成你想要放的目录， 
+我的例子（$npm config set prefix "E:\nodejs\node_global_modules"）可能你百度的链接有后面的node_modules文件夹，其实不用写，程序自动会加上的。
+不信？你打个$npm root -g看看！其他的文件名自己取好了，反正和后面的我们要配置的地方统一就OK了
+
+打开你安装nodejs里的node_modules里的npm,找找看 是不是有个叫做npmc的文件打开它把那个prefix链接给改了。
+
+OK。我当时以为OK了。一直打$cnpm、$vue都是报错找不到，然后 一个风雪交加的夜晚~。。。。。打开我的电脑=》高级系统设置=》环境变量=》在用户变量中加个PATH变量，
+我的例子（E:\nodejs\node_global_modules）；在系统变量里加NODE_PATH，我的例子（E:\nodejs\node_global_modules\node_modules）。
+
+然后再试试什么 $cnpm、$vue都是不报错了，这不就成功了吗！~~~~~~

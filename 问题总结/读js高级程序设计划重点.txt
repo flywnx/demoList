@@ -1,0 +1,24 @@
+1.对于js的赋值变量值；
+	复制值时；
+	let n = 5;
+	let m = n ; //5
+	n+5; //10;
+	m //5
+	赋值对象时：
+	let a = new Object();
+	let b = a;
+	a.name = 'js';
+	alert(b.name) // js
+总结：
+	复制值时因为值没有内存地址，所以n与m所指向的值是不同的值。
+	而对象是有内存地址的，所以a与b指向的是同一个对象。
+	
+2.对于变量提前的理解
+	function add(){
+		console.log(n);//undefined
+		var n = 1;
+	}
+在执行js时程序会扫描两遍，第一遍js先将变量与函数都声明（不执行），第二遍 赋值并执行js;
+所以就出现了变量提前。
+附：当var 换成let， console.log(n);会报错。let在第二遍时 才会声明与赋值。
+	

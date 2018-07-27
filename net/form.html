@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <style>
+        input:placeholder-shown{
+            color: red;
+            text-decoration: underline;
+        }
+        p{
+            font-weight: bold;
+            font-size: 14px;
+        }
+        p:before{
+            content: '↑   ';
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>input属性</legend>
+            <p>fieldset用于打包表单内容；legend标题fieldset打包的表单</p>
+            <input type="file">
+            <p>input type="file" 用于文件上传</p>
+            <input type="text" placeholder="您的芳名" required autofocus>
+            <p>required属性为必填属性，如果缺少浏览器会给予提示但向下兼容并不好；placeholder设置预期值提示；autofocus属性自动获取焦点；</p>
+            <input type="color">
+            <p>type="color" 可以使input变成颜色选择器；</p>
+            <input type="range"  max="20" min="0" value="0">
+            <p>type="range" 可以使input变成数字字段滑动条； max和min可以设置最大最小值； step属性设置滑动的递增减量； defaultValue属性设置默认值；type="nunber" 也是定义数字 max,min和step属性同样适用；type="password" 用于定义密码输入</p>
+            <input type="search" >
+            <p>type="search" input设置成搜索框 它具有默认样式（那个蓝色的小叉）；input[type="search"]::-webkit-search-cancel-button{
+                display: none;
+            }
+            可以去除默认样式</p>
+            <input type="email" >
+            <p>type='tel' 只是定义用于电话输入并无验证；type='email' 定义电邮格式并在提交时对输入的内容格式进行验证，浏览器会给出相应提示；</p>
+            <input type="text" list="aaa" id='datal'>
+            <datalist id="aaa">
+                <option label="1" value="a">
+                <option label="2" value="b">
+                <option label="3" value="c">
+                <option label="4" value="d">
+                <option label="5" value="e">
+                <option label="6" value="f">
+            </datalist>
+            <p>list属性可以关联一个datalist标签 datalist用于设置预定义选项option标签</p>
+            <input type="time" >
+            <p>h5自带时间控件；时间控件type种类：date（包括年、月、日，不包括时间）；month （年月）；week(周年);time(小时：分)；datetime和datetime-local兼容不好不能使用</p>
+            <input type="reset" >
+            <p>type="reset" 用于重置表单，reset，submit这一类的必须在form表单内部才能生效，设置form属性关联form标签ID 可以重置该关联form表单内容 </p>
+            <input type="button" value="button">
+            <p>button,submit 都为按钮控件 button一般用于触发js事件，submit用于提交事件；</p>
+            <input type="radio" name='1'><input type="radio" name='1'><input type="checkbox" name='2'><input type="checkbox" name='2'>
+            <p>单复选框 点击样式一般与label标签配合</p>
+            <input type="url" >
+            <p>type="url" 用于定义链接，iPhone 的 Safari 浏览器会识别 url 输入类型，然后改变触摸屏的键盘来适应它（添加 .com 选项）。</p>
+        </fieldset>
+        <h2>新标签</h2>
+        <progress value="45" max="100"></progress>
+    	<progress >1111</progress>
+        <meter min="5" max="100" value="25"></meter>KG
+        <audio src="other/茶底世界.mp3" controls=""></audio>
+        <p>video 的poster属性可以设置视频替换图</p>
+        <p>mediagroup 属性适用于video与audio 标签同步播放</p>
+
+    </form>
+</body>
+</html>

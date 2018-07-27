@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播</title>
+    <style>
+        #fa{border: #e1e1e1 solid 1px;position: relative;height: 320px;width: 600px;overflow: hidden;}
+        #son{height: 320px;width: 3600px;z-index: 1;position: absolute;}
+        #son img{float: left;width: 600px;}
+        #arrow_left,#arrow_right{display: inline-block; width: 30px;height: 30px;background-image: url("css/icon/arrow_r.png");background-size: 30px;position: absolute;top: 108px;left: 20px;z-index: 2;}
+        #arrow_left{left: 550px;}
+        #arrow_right{transform:rotate(180deg);}
+        #btns{width: 120px;height:20px;z-index: 2;position: absolute;left: 240px;top:280px;}
+        #btns span{display: inline-block;width: 20px;height: 20px;background-image: url("css/icon/point_n.png");background-size: 20px;margin:0 5px;}
+        #btns .btn_span_on{background-image: url("css/icon/point_y.png");}
+    </style>
+    <script>
+        window.onload = function () {
+            var fa = document.getElementById("fa");
+            var son = document.getElementById("son");
+            var arrow_left = document.getElementById("arrow_left");
+            var arrow_right = document.getElementById("arrow_right");
+            var btn = document.getElementById("btns").getElementsByTagName("span");
+            var index =1;
+            var clc=true;
+            //按钮变化
+            function showBtn() {
+                for(var i =0;i<btn.length;i++){
+                    if(btn[i].className == "btn_span_on"){
+                        btn[i].className = "";
+                        break;
+                    }
+                }
+                btn[index -1].className = "btn_span_on";
+            }
+            //图片移动
+            function Roll(arg){
+                var lang =parseInt(son.style.left) + arg;
+                var img_time = 300;//位移时间
+                var img_val = 10;//位移间隔
+                var img_move = arg/(img_time/img_val);//每次位移量
+
+                function go() {
+                    clc = false;
+                    if((img_move<0 && parseInt(son.style.left)>lang)||(img_move>0 && parseInt(son.style.left)<lang)){
+                        son.style.left = parseInt(son.style.left) + img_move + "px";
+                        setTimeout(go,img_val);
+                    }else{
+                        son.style.left = lang + "px";
+                        if(lang > -600){
+                            son.style.left = -2400+"px";
+                        }
+                        if(lang < -2400){
+                            son.style.left = -600+"px";
+                        }
+                        clc = true;
+                    }
+                }
+                go();
+            }
+            //自动播放
+            function play() {
+                timer = setInterval(function () {
+                    arrow_left.onclick();
+                },1000);
+            }
+            function stop() {
+                clearInterval(timer);
+            }
+            //向有按钮
+            arrow_left.onclick = function () {
+                if(clc) {
+                    index == 4 ? index = 1 : index += 1;
+                    showBtn();
+                    Roll(-600);
+                }
+            }
+            //向左按钮
+            arrow_right.onclick = function () {
+                if(clc){
+                    index == 1?index =4:index -=1;
+                    showBtn();
+                    Roll(600);
+                }
+            }
+            //圆点点击事件
+            for(var i =0;i<btn.length;i++){
+                btn[i].onclick = function () {
+                    if(this.className =="btn_span_on"){
+                        return;
+                    }
+                    var ind = parseInt(this.getAttribute("index"));
+                    var far = -600 * (ind-index);
+                    Roll(far);
+                   index =ind;
+                    showBtn();
+                }
+            }
+
+            fa.onmouseover =stop;
+            fa.onmouseout = play;
+            play();
+        }
+    </script>
+</head>
+<body>
+    <div id="fa">
+        <div id="son" style="left: -600px;">
+            <img src="img/4.jpg"><img src="img/1.jpg"><img src="img/2.jpg"><img src="img/3.jpg"><img src="img/4.jpg"><img src="img/1.jpg">
+        </div>
+        <div id="arrow_right"></div><div id="arrow_left"></div>
+        <div id="btns"><span class="btn_span_on" index="1"></span><span index="2"></span><span index="3"></span><span index="4"></span></div>
+    </div>
+</body>
+</html>

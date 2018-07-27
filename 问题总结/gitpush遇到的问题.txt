@@ -1,0 +1,15 @@
+1.当遇到一下问题时：
+	$ git push origin master
+	To github.com:flywnx/theShow.git
+	 ! [rejected]        master -> master (non-fast-forward)
+	error: failed to push some refs to 'git@github.com:flywnx/theShow.git'
+	hint: Updates were rejected because the tip of your current branch is behind
+	hint: its remote counterpart. Integrate the remote changes (e.g.
+	hint: 'git pull ...') before pushing again.
+	hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+是说明本地与远程库不统一，可以用 git push -u origin master -f (-f是重点 强制更新)。
+
+2.origin 是远程库。用git remote -v 能看到你设置的远程库
+	git remote add （远程库链接）添加远程库
+	git remote ste-url （远程库链接）修改远程库
+    git remote rm（远程库链接）删除远程库

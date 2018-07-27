@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播</title>
+    <style>
+        #fa{border: #e1e1e1 solid 1px;position: relative;height: 320px;width: 600px;overflow: hidden;}
+        #son{height: 320px;width: 3600px;z-index: 1;position: absolute;}
+        #son img{float: left;width: 600px;}
+        #arrow_left,#arrow_right{display: inline-block; width: 30px;height: 30px;background-image: url("css/icon/arrow_r.png");background-size: 30px;position: absolute;top: 108px;left: 20px;z-index: 2;}
+        #arrow_left{left: 550px;}
+        #arrow_right{transform:rotate(180deg);}
+        #btns{width: 120px;height:20px;z-index: 2;position: absolute;left: 240px;top:280px;}
+        #btns span{display: inline-block;width: 20px;height: 20px;background-image: url("css/icon/point_n.png");background-size: 20px;margin:0 5px;}
+        #btns .btn_span_on{background-image: url("css/icon/point_y.png");}
+		#circle{
+			width: 600px;
+			height:338px;
+			position: relative;
+		}
+		
+		#circle img {
+			width: 600px;
+			transition: 1s;
+			position: absolute;
+			top:0;
+			left:0;
+			opacity: 0;
+			z-index:1;
+		}
+		#circle .xs{
+			opacity: 1;
+			z-index:2;
+		}
+		#circle2{
+			width: 1200px;
+			height:338px;
+			position: relative;
+			margin-top: 100px;
+			overflow: hidden;
+			margin: auto;
+		}
+		#circle2 img{
+			width:400px;
+			position:absolute;
+			z-index:2;
+			top: 28px;
+			transition: 1s;
+		}
+		#circle2 .dximg1 {
+			left:-100px;
+		}
+		#circle2 .dximg2 {
+			
+			left:300px;
+			transform:scale(1.5,1.5);
+			z-index:3;
+		}
+		#circle2 .dximg3 {
+			left:700px;
+		}
+		#circle2 .dximg4 {
+			left:700px;
+			z-index:1;
+		}
+    </style>
+    <script>
+        window.onload = function () {
+            var fa = document.getElementById("fa");
+            var son = document.getElementById("son");
+            var arrow_left = document.getElementById("arrow_left");
+            var arrow_right = document.getElementById("arrow_right");
+            var btn = document.getElementById("btns").getElementsByTagName("span");
+            var index =1;
+            var clc=true;
+            //按钮变化
+            function showBtn() {
+                for(var i =0;i<btn.length;i++){
+                    if(btn[i].className == "btn_span_on"){
+                        btn[i].className = "";
+                        break;
+                    }
+                }
+                btn[index -1].className = "btn_span_on";
+            }
+            //图片移动
+            function Roll(arg){
+                var lang =parseInt(son.style.left) + arg;
+                var img_time = 300;//位移时间
+                var img_val = 10;//位移间隔
+                var img_move = arg/(img_time/img_val);//每次位移量
+
+                function go() {
+                    clc = false;
+                    if((img_move<0 && parseInt(son.style.left)>lang)||(img_move>0 && parseInt(son.style.left)<lang)){
+                        son.style.left = parseInt(son.style.left) + img_move + "px";
+                        setTimeout(go,img_val);
+                    }else{
+                        son.style.left = lang + "px";
+                        if(lang > -600){
+                            son.style.left = -2400+"px";
+                        }
+                        if(lang < -2400){
+                            son.style.left = -600+"px";
+                        }
+                        clc = true;
+                    }
+                }
+                go();
+            }
+            //自动播放
+            function play() {
+                timer = setInterval(function () {
+                    arrow_left.onclick();
+                },2000);
+            }
+            function stop() {
+                clearInterval(timer);
+            }
+            //向有按钮
+            arrow_left.onclick = function () {
+                if(clc) {
+                    index == 4 ? index = 1 : index += 1;
+                    showBtn();
+                    Roll(-600);
+                }
+            }
+            //向左按钮
+            arrow_right.onclick = function () {
+                if(clc){
+                    index == 1?index =4:index -=1;
+                    showBtn();
+                    Roll(600);
+                }
+            }
+            //圆点点击事件
+            for(var i =0;i<btn.length;i++){
+                btn[i].onclick = function () {
+                    if(this.className =="btn_span_on"){
+                        return;
+                    }
+                    var ind = parseInt(this.getAttribute("index"));
+                    var far = -600 * (ind-index);
+                    Roll(far);
+                   index =ind;
+                    showBtn();
+                }
+            }
+
+            fa.onmouseover =stop;
+            fa.onmouseout = play;
+            play();
+        }
+    </script>
+</head>
+<body>
+    <!-- 移动轮播 -->
+	<div id="fa">
+        <div id="son" style="left: -600px;">
+            <img src="img/4.jpg"><img src="img/1.jpg"><img src="img/2.jpg"><img src="img/3.jpg"><img src="img/4.jpg"><img src="img/1.jpg">
+        </div>
+        <div id="arrow_right"></div><div id="arrow_left"></div>
+        <div id="btns"><span class="btn_span_on" index="1"></span><span index="2"></span><span index="3"></span><span index="4"></span></div>
+    </div>
+	<!-- 渐隐渐现轮播 -->
+	<div id='circle'>
+		<img src="img/1.jpg"><img src="img/2.jpg"><img src="img/3.jpg"><img src="img/4.jpg">
+	</div>
+	<div id='circle2'>
+		<img src="img/1.jpg" class="dximg1"><img src="img/2.jpg" class="dximg2"><img src="img/3.jpg" class="dximg3"><img src="img/4.jpg">
+	</div>
+	<script>
+		!function () {
+			var c = document.getElementById("circle");
+			var imgs = c.childNodes;
+			var arr =[];
+			 for(var i =0;i<imgs.length;i++){
+				if(('src' in imgs[i])){
+					arr[arr.length] = imgs[i].getAttribute('src');
+				}			
+				c.removeChild(imgs[i]);
+				i--;
+			 }
+			 
+			 var img1 = document.createElement("img");
+			 img1.className="xs";
+			 img1.id="img1";
+			 var img2 = document.createElement("img");
+			 img2.className="";
+			 img2.id="img2";
+			 c.appendChild(img1)
+			 c.appendChild(img2);
+			 
+			 if(arr.length<=0){
+				return;
+			 }else if(arr.length==1){
+				img1.src=arr[0];
+			 }else if(arr.length>1){
+				img1.src=arr[0];
+				img2.src='';
+				var num = 0;
+				
+				play();
+			 }
+			 function play() {
+                timers = setInterval(function(){vary();},2000);
+            }
+			 function vary(){
+				
+				if(img2.className==""){
+					img1.className='';
+					img2.className='xs';
+					img2.src=arr[num];
+					num++;
+				}else{
+					img1.className='xs';
+					img2.className='';
+					img1.src=arr[num];
+					num++;
+				}
+				if(num==arr.length){num=0}
+			 }
+		}();
+		
+		~function () {
+			var c = document.getElementById("circle2");
+			var imgs = c.childNodes;
+			var num;
+			 console.log(imgs);
+			var arr =[];
+			 for(var i =0;i<imgs.length;i++){
+				if(('src' in imgs[i])){
+					arr[arr.length] =imgs[i].getAttribute('src');				
+				}				
+				
+				c.removeChild(imgs[i]);
+				i--;
+			 }
+			 console.log(arr);
+			 var img1 = document.createElement("img");
+			 img1.src=arr[0];
+			 img1.className='dximg1';
+			 img1.index='0';
+			 var img2 = document.createElement("img");
+			 img2.src=arr[1];
+			 img2.className='dximg2';
+			 img2.index='1';
+			 var img3 = document.createElement("img");
+			 img3.src=arr[2];
+			 img3.className='dximg3';
+			 img3.index='2';
+			 c.appendChild(img1);
+			 c.appendChild(img2);
+			 c.appendChild(img3);
+			 console.log(c.childNodes);
+			function plays() {
+                timers = setInterval(function(){move();},2000);
+            }
+			function move(){
+				var kids = c.childNodes;
+				while(kids.length>3){
+					c.removeChild(kids[0]);
+				}
+				var newImg = document.createElement("img");;
+				
+					
+					if(kids[0].className=='dximg1'){
+						num = kids[0].index;
+						
+						if(num-1<0){
+							num=arr.length-1;
+						}else{
+							num =num-1;
+						}
+						
+						
+						newImg.src=arr[num];
+						newImg.index=num;
+						newImg.className='dximg4';
+						c.appendChild(newImg);
+					}
+					
+					if(kids[1].className=='dximg2'){
+						
+						kids[1].className='dximg1';
+					
+					}
+					console.log(kids);
+					if(kids[2].className=='dximg3'){
+						kids[2].className='dximg2';
+					}
+					if(kids[kids.length-1].className=='dximg4'){
+						kids[kids.length-1].className='dximg3';
+						
+						
+					}
+				
+			}
+			//move();
+			plays();
+		}();
+	</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+1：vue端口修改
+	在config文件夹下的index.js中有个port:8080(使用webpack创建的vue项目默认端口是8080)；
+	
+2：package.json文件中不能添加备注，否则会报错。

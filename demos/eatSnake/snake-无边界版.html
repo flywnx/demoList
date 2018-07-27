@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-size: 16px; 
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap-reverse;
+      width: 10rem;
+      border: 1px solid #ddd;
+      margin: 3rem auto;
+    }
+    li {
+      list-style: none;
+      box-sizing: border-box;
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid #ddd;
+    }
+    .snake {
+      background-color: #2c6f77;
+    }
+    .empty {
+      background-color: #a2cdc7;
+    }
+    .food {
+      background-color: #04373f;
+    }
+  </style>
+</head>
+<body>
+  <!-- 游戏主体 -->
+  <main>
+    <ul></ul>
+  </main>
+  <script>
+    let snake = new Array();
+    let direction = 'up';
+    (function () {
+      //游戏区域生成
+      
+      let ul = document.querySelectorAll('main ul')[0];
+      for (let i = 0; i < 100; i++) {
+        let li = document.createElement('li');
+        li.setAttribute('id', 'li' + i);
+        li.className = 'empty';
+        ul.appendChild(li);
+      }      
+      //蛇体生成
+      snake.push(document.getElementById('li10'));
+      snake.push(document.getElementById('li0'));
+      snake.forEach((item) => {
+        item.className = 'snake'
+      });
+      food();
+    })(snake, direction);
+
+    //生成食物
+    function food() {
+      let lis = document.querySelectorAll('ul li');
+      let ret = [];
+      for (let i = 0; i < lis.length; i++) {
+        if (lis[i].getAttribute('class') === 'empty') {
+          ret.push(lis[i]);
+        }
+      }
+      ret[random(ret.length)].className = 'food';
+    }
+    //随机函数
+    function random(num) {
+      return Math.floor(Math.random() * num);
+    }
+
+    //方向判定
+    document.onkeydown = (e) => {
+      if (e.keyCode !== directionJudge()) {
+        switch(e.keyCode) {
+          case 37:
+            direction = 'right';
+            break
+          case 38:
+            direction = 'up';
+            break
+          case 39:
+            direction = 'left';
+            break
+          case 40:
+            direction = 'down';
+            break
+        }
+      }
+      snakeDirection(snake, direction);
+    }
+    //返回禁用方向
+    function directionJudge() {
+      let one = snake[0].getAttribute('id').split('li')[1];
+      let two = snake[1].getAttribute('id').split('li')[1];
+      switch(parseInt(one) - parseInt(two)) {
+        case -10:
+          return 38;
+        case 10:
+          return 40;
+        case 1:
+          return 37;
+        case -1:
+          return 39;
+      }
+    }
+
+    //蛇行动
+    let snakeGoing = setInterval(() => {
+      snakeDirection(snake, direction);
+    }, 800)
+
+    //蛇移动
+    function snakeDirection(snake, direction) {
+      let h;
+      switch(direction) {
+        case 'up': 
+          h ='+10';
+          break
+        case 'down': 
+          h ='-10';
+          break
+        case 'left': 
+          h ='+1';
+          break
+        case 'right': 
+          h ='-1';
+          break
+      }
+      let head = snake[0].getAttribute('id').split('li')[1];
+      head = document.getElementById('li' + (parseInt(head) + parseInt(h)));
+      if (!head) {
+        let idNum = snake[0].getAttribute('id').split('li')[1].split('')
+        if (idNum.length === 2) {
+          let liNum = (parseInt(idNum[1]) + parseInt(1)) === 10 ? 0 : (parseInt(idNum[1]) + parseInt(1))
+          head = document.getElementById('li' + liNum)
+        } else if(idNum.length === 1) {
+          let liNum = 100 - idNum[0]
+          head = document.getElementById('li' + liNum)
+        }
+        console.log(idNum)
+      }
+      let tt = head.getAttribute('id').split('');
+      let ts = snake[0].getAttribute('id').split('');
+      eatFood(head);
+    }
+    
+    //判断蛇行进的格子是否为食物
+    function eatFood(dom) {
+        if (dom.getAttribute('class') === 'empty') {
+          dom.className = 'snake';
+          snake.unshift(dom);
+          let tail = snake.splice(snake.length - 1, 1)[0];
+          tail.setAttribute('class', 'empty');
+        } else if(dom.getAttribute('class') === 'food') {
+          dom.className = 'snake';
+          snake.unshift(dom);
+          food();
+        } else if(dom.getAttribute('class') === 'snake') {
+          clearInterval(snakeGoing);
+          alert('游戏结束');
+        }
+      
+    }
+  </script>
+</body>
+</html>

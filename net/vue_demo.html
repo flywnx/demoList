@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue 练习</title>
+	<script src="js/vue.js"></script>
+	<style>
+		.remove{
+			text-decoration: line-through;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="demo1">
+		<div>
+			<input type="text" v-model="newName">
+			<button v-on:click="newLi">提交</button>
+		</div>
+		<div>
+			<h5>准备做的任务</h5>
+			<ul>
+				<template v-for='it in listName' v-if='it.flag=="0"'>
+					<li><span>{{it.name}}</span><button v-on:click="complete(it)">完成</button><button v-on:click="removeLi(it)">删除</button></li>
+				</template>
+			</ul>
+		</div>
+		<div>
+			<h5>完成了的任务</h5>
+			<ul>
+				<template v-for='it in listName' v-if='it.flag=="2"'>
+					<li><span>{{it.name}}</span><button v-on:click="removeLi(it)">删除</button></li>
+				</template>
+			</ul>
+		</div>
+		<div>
+			<h5>删除了的任务</h5>
+			<ul>
+				<template v-for='it in listName' v-if='it.flag=="1"'>
+					<li><span class="remove">{{it.name}}</span><button v-on:click="eliminate(it)">清除</button></li>
+				</template>
+			</ul>
+		</div>
+	</div>
+	<script >
+		// Vue.component('liList',{
+		// 	props: ['list'],
+		// 	template:"<li >{{it}}</li>"
+		// })
+
+		let demo1 = new Vue({
+			el:'#demo1',
+			data:{
+				newName:"",
+				//flag{0:准备,1:删除,2:完成}
+				listName:[]
+			},
+			methods:{
+				newLi:function(){
+					// console.log("1列表里有："+this.listName);
+					this.listName.push({key:this.listName.length,name:this.newName,flag:"0"});
+					this.newName="";
+					// console.log("2列表里有："+this.listName);
+				},
+				removeLi:function(event){
+					// console.log(event);
+					event.flag='1';
+				},
+				complete:function(event){
+					//console.log(event);
+					event.flag='2';
+				},
+				eliminate:function(event){					
+					for(let i =0;i<this.listName.length;i++){
+						if(this.listName[i].key==event.key){
+							this.listName.splice(i,1);
+						}
+					}
+				}
+			},
+			computed:{
+				
+			}
+		})
+	</script>
+</body>
+</html>

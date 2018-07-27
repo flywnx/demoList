@@ -1,0 +1,157 @@
+
+.flex1{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #009de4;
+    color: #333333;
+    height: 200px;
+}
+#flex2{
+    display: flex;
+    background-color: indigo;
+    font-size: 1rem;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0 1rem;
+    margin: 20px 0;
+
+}
+.flex2_li2,
+.flex2_li1{
+    color: #ebebeb;
+    text-decoration: none;
+
+}
+.flex2_li1{
+    margin-right: 1rem;
+}
+.flex2_li2{
+    margin-left: auto;
+}
+.row{
+    flex-direction:row;
+}
+.row-reverse{
+    flex-direction:row-reverse;
+}
+.column{
+    flex-direction:column;
+}
+.column-reverse{
+    flex-direction:column-reverse;
+}
+.flex3{
+    display: inline-flex;
+    width: 400px;
+    height: 200px;
+    background-color: indigo;
+    color: #fff;
+}
+.flex3 .f1{
+    background-color: #34005B;
+    display: flex;
+    height: 100px;
+    width: 200px;
+}
+.fflex{
+    justify-content: space-around;
+    display: flex;
+}
+.Dices{
+    display: flex;
+    margin: 25px 0;
+    justify-content: space-around;
+    width: 100%;
+}
+.Dices>div{
+    background-color: #000;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    padding: 10px;
+}
+.Dices>div span{
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.Dices>div#one{
+    justify-content: center;
+    align-items: center;
+}
+
+.Dices>div#two{
+    justify-content: space-between;
+}
+.Dices>div#two span:last-child{
+    align-self: flex-end;
+}
+
+.Dices>div#three{
+    justify-content: space-between;
+}
+.Dices>div#three span:last-child{
+    align-self: flex-end;
+}
+.Dices>div#three span:nth-child(2){
+    align-self: center;
+}
+
+.Dices>div#four{
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+.Dices>div#four span:nth-child(2){
+    margin-left: 10px;
+}
+.Dices>div#four span:nth-child(3){
+    align-self: flex-end;
+}
+.Dices>div#four span:last-child{
+    align-self: flex-end;
+}
+
+.Dices>div#five{
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+.Dices>div#five span:nth-child(2){
+    margin-left: 10px;
+}
+.Dices>div#five span:nth-child(3){
+    align-self: center; 
+    margin: 0 10px;
+}
+.Dices>div#five span:nth-child(4){
+    align-self: flex-end;
+}
+.Dices>div#five span:nth-child(5){
+    align-self: flex-end;
+}
+
+.Dices>div#six{
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.Dices>div#six span:nth-child(4),
+.Dices>div#six span:nth-child(5),
+.Dices>div#six span:nth-child(6){
+    align-self: flex-end;
+}
+
+
+
+
+
+
+
+
+

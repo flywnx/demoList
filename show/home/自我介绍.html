@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>简历</title>
+	<script src="js/vue.min.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_517616_k0lajxelnh5s714i.css">
+    <style>
+    	html,body,ul,p,h1,h2{
+    		margin: 0;
+    		padding: 0;
+    	}
+    	#resume{
+			height: calc(100vh - 100px);
+			min-height: 500px;
+			position: relative;
+			overflow: hidden;
+			/*overflow: auto;*/
+		}
+
+		.resume-nav i{
+			font-size: 14px;
+		}
+		.zd{
+			color:#ff6700;
+			font-weight: bold;
+		}
+		.rc-all{
+			position: absolute;
+			width: 100%;
+			transition: 0.5s;
+		}
+		.rc-all>div{
+			text-align: center;
+			padding: 25px 0;
+			height: calc(100vh - 150px);
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			min-height: 500px;
+		}
+		#resume>div.resume-nav{
+			width: 14px;
+			position: fixed;
+			right: 30px;
+			top:calc(50% );
+			max-height: 100px;
+			min-height: 100px;
+			z-index: 9;
+		}
+		.rc-1 h1{
+			font-family: cursive;
+			font-size: 64px;
+			margin:0px;
+		}
+		.rc-1>div{
+			/*margin:40px 0;*/
+			display: flex;
+			justify-content: space-around;
+		}
+		.rc-1>div div i{
+			font-size: 64px;
+		}
+		.rc-2 h2{
+			font-size: 48px;
+			margin:0px;
+		}
+		.kungfuShow{
+			display: flex;
+			justify-content: space-around;
+		}
+		.skill{
+			display: flex;
+			justify-content: space-around;
+			width: 80%;
+	    	margin: 0 auto;
+		}
+		.skill>div{
+			width: 150px;
+			position: relative;
+		}
+		.skill>div>img{
+			width: 100px;
+			min-height: 100px;
+			border-radius: 10px;
+		}
+		.introduction{
+		    position: absolute;
+		    background-color: #000000a1;
+		    width: 150px;
+		    height: 0px;
+		    top: 0;
+		    border-radius: 10px;
+		    transition: height .5s;
+		    padding: 0;
+		    overflow: hidden;
+		}
+		.introduction p{
+			color:#f9f9f9;
+			font-size: 14px;
+			margin: 10px;
+		}
+		.skill>div:hover .introduction{
+			height: 150px;
+			
+		}
+    </style>
+</head>
+<body>
+	<div id='resume' @mousewheel="ms">
+		<!-- 导航栏 -->
+			<div class='resume-nav' id='resume-nav'>
+				<i  class="icon iconfont icon-yuandian1" @click="scroll('1')"></i>
+				<i  class="icon iconfont icon-yuandian1" @click="scroll('2')"></i>
+				<i  class="icon iconfont icon-yuandian1" @click="scroll('3')"></i>
+				<i  class="icon iconfont icon-yuandian1" @click="scroll('4')"></i>
+			</div>
+		<!-- 内容总框 -->
+		<div class='rc-all' id='rc-all' >
+			
+			<div class='rc-1' id='rc-1'>
+				<h1 >蒋立波</h1>
+				<p>90后，16年毕业，16年10月成为程序猿</p>
+				<p class='zd'>随时能够入职</p>
+				<div>
+					<div><img src="img/resume/zhuan.png"><p>学建筑专业<br>实习在工地勤勤恳恳的搬砖</p></div>
+					<div><img src="img/resume/book.png"><p>实习期过后<br>发现自己对编程的兴趣就决定重新开始</p></div>
+					<div><img src="img/resume/code.png"><p>16年10月成功找到工作<br>正式成为程序猿</p></div>
+				</div>
+			</div>
+			<div class='rc-2'>
+				<h2>奋斗中的前端程序猿</h2>
+				<div>
+					<p>蒋立波，一年开发经验</p>
+					<p>主攻前端，写过后端，会写简单的SQL。毕竟不懂后端的前端不是好前端嘛~</p>
+					<p>在之前的工作中都是用java做后端，前端用jQuery，用jQuery封装的ajax做前后端的交互。</p>
+					<p>对前端新技术一直有着十分浓厚的兴趣！！！</p>
+				</div>
+				<p class='zd'>今日虽是菜鸟，日后必将练成前端十八般武艺</p>
+				<div class="kungfuShow">
+					<img :src='kf' v-for='kf in kungfu'>
+				</div>
+			</div>
+			<div class='rc-3'>
+				<h2>前端开发技能</h2>
+					<!-- 前端技能列举 -->
+				<div class='skill'>
+					<div v-for='sk in Qskill' >
+						<img :src="sk.img">
+						<p class='zd'>{{sk.name}}</p>
+						<span class='zd'>熟练度：{{sk.percentage}}</span>
+						<div class='introduction'>
+							<p>{{sk.info}}</p>
+						</div>
+					</div>
+				</div>
+				<h2>后端开发技能</h2>
+				<div class='skill'>
+					<div v-for='sk in Hskill' >
+						<img :src="sk.img">
+						<p class='zd'>{{sk.name}}</p>
+						<span class='zd'>熟练度：{{sk.percentage}}</span>
+						<div class='introduction'>
+							<p>{{sk.info}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='rc-4'>
+				<h2>工作经历与做过的项目</h2>
+				<div>
+					<p>我一年多的程序员生涯都是在绍兴科比软件有限公司度过的，在公司期间我主要负责的要是前端的编写，当然也会负责一些后端的工作，也写过SQL。</p>
+					<p>在工作期间，前台页面多是基于微信浏览器的移动端页面，后台是用bootstrap的PC页面。</p>
+					<p>后来因为一些原因‘和平分手’，也是十分感谢科比软件。</p>
+				</div>
+				<div>
+					<div class='skill'>
+						<div v-for='sk in items' >
+							<img :src="sk.img">
+							<p class='zd'>{{sk.name}}</p>
+							<div class='introduction'>
+								<p>{{sk.info}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		new Vue({
+			el:'#resume',
+			data:{
+				kungfu:['img/kungfu/kungfu-1.png','img/kungfu/kungfu-2.png','img/kungfu/kungfu-3.png','img/kungfu/kungfu-4.png','img/kungfu/kungfu-5.png','img/kungfu/kungfu-6.png'],
+				Qskill:[{img:'img/skill/html5.png',percentage:'90%',name:'html5+css3',
+					info:'一开始接触的就是这个，H5和css3一直在用，对css动画与媒体查询也是能熟练运用的。'},
+					   {img:'img/skill/javascript.png',percentage:'80%',name:'javascript',
+					info:'从开始自学就一直在学习，现在在学Node的同时也一直在复习，对ES6也是能熟练的运用。'},
+					   {img:'img/skill/jquery.png',percentage:'80%',name:'jquery',
+					info:'在之前的项目中都是原生JS加jquery结合做的前端，jquery封装的ajax也是在项目中运用很多，所以对jquery也是有比较深的了解。'},
+					   {img:'img/skill/vue.png',percentage:'70%',name:'Vue',
+					info:'你看到这个网站就是我用Vue写的，对Vue-router，Vuex，axios都能熟练运用。'},
+					   {img:'img/skill/node.png',percentage:'40%',name:'Node',
+					info:'node是从学习Vue开始接触的，对express有所了解，也在不断地学习中。'},
+					  ],
+				Hskill:[{img:'img/skill/Java.png',percentage:'60%',name:'Java',
+					info:'在SSM框架下我能熟练的编写Controller，Service，ServiceImpl，dao'},
+						{img:'img/skill/mysql.png',percentage:'60%',name:'MySQL',
+					info:'掌握的sql语句能够应付日常的工作需求'},
+						{img:'img/skill/sqlserver.png',percentage:'40%',name:'SQLServer',
+					info:'在重构一个养老项目时有所了解，写过一些存储过程。'}
+					   ],
+				items:[
+					  {img:'img/item/benz.png',name:'benzSCRM系统',info:'这是一个基于微信公众号的会员系统，在这个项目中我主要承担的是移动端的页面与一些数据处理。入口在benz的微信公众号中的星友荟。'},
+					  {img:'img/item/fz.png',name:'上海纺织时尚定制',info:'我负责这个项目的PC与微信公众号两部分的首页部分与定制模块。PC链接：yundingzhi.shop。移动端在上海纺织时尚定制的公众号中。'}
+					  ],
+				keys:1,
+				scrollOk:true,
+			},
+			methods:{
+				scroll(key){
+					if(this.scrollOk){
+						// console.log(this.scrollOk);
+						this.scrollOk=false;
+						// console.log(this.keys+"-"+key);
+						var height = $("#rc-1").outerHeight();
+						var tops = -height*(key-1);
+						// console.log(tops);
+						$("#rc-all").css('top',tops);
+						//获取右侧圆点
+						var rni  = $('#resume-nav i');
+						// console.log(rni);
+						// console.log($(rni[this.keys-1]).prop("className"));
+						if($(rni[this.keys-1]).hasClass('icon-yuandian')){
+							// console.log('有实心圆');
+							$(rni[this.keys-1]).removeClass('icon-yuandian');
+							$(rni[this.keys-1]).addClass('icon-yuandian1');
+							this.keys = key;
+							$(rni[this.keys-1]).removeClass('icon-yuandian1');
+							$(rni[this.keys-1]).addClass('icon-yuandian');
+						}else{
+							// console.log('有空心圆');
+							
+							$(rni[this.keys-1]).removeClass('icon-yuandian1');
+							$(rni[this.keys-1]).addClass('icon-yuandian');
+							this.keys = parseInt(key);
+						}
+						// console.log(this.scrollOk);
+						
+						// this.scrollOk=true;
+						this.animate();
+						setTimeout(this.sot,500);
+						// console.log(this.scrollOk);
+					}
+					
+				},
+				sot(){
+					this.scrollOk=true;
+				},
+				ms(e){
+					//非firefox 向上120，向下-120
+					//向上
+					// console.log(this.keys)
+					let key = this.keys;
+					if(e.wheelDelta>0){
+						if(this.keys>1){
+							key = parseInt(this.keys)-1;
+						}
+					}else{
+						if(this.keys<4){
+							key = parseInt(this.keys)+1;
+						}
+					}
+					// console.log(this.keys)
+					this.scroll(key);
+					// setTimeout(this.scroll(key),5000);
+					// console.log(e.wheelDelta);
+				},
+				animate(){
+					if(this.keys==1){
+						$('#rc-1 h1').addClass('animated zoomIn');
+						$('#rc-1>div>div').addClass('animated bounceInLeft');
+					}else{
+						$('#rc-1 h1').removeClass('animated zoomIn');
+						$('#rc-1>div>div').removeClass('animated bounceInLeft');
+					}
+					if(this.keys==2){
+						$('.rc-2 h2').addClass('animated rubberBand')
+						$('.rc-2 .kungfuShow img').addClass('animated  jello');
+
+					}else{
+						$('.rc-2 h2').removeClass('animated rubberBand')
+						$('.rc-2 .kungfuShow img').removeClass('animated  jello');
+					}
+					if(this.keys==3){
+						$('.rc-3 .skill div').addClass('animated rotateIn');
+					}else{
+						$('.rc-3 .skill div').removeClass('animated rotateIn');
+					}
+					if(this.keys==4){
+						$('.rc-4 h2').addClass('animated rollIn');
+						$('.rc-4 .skill div').addClass('animated lightSpeedIn');
+					}else{
+						$('.rc-4 h2').removeClass('animated rollIn');
+						$('.rc-4 .skill div').removeClass('animated lightSpeedIn');
+					}
+				}
+			},
+			computed:{
+
+			},
+			mounted(){
+				// console.log(this.keys)
+				this.scroll(this.keys);
+
+		    }
+		})
+	</script>
+</body>
+</html>

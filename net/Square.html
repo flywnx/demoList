@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>正方形反向旋转</title>
+	<style type="text/css">
+		#all{
+			
+			position: relative;
+			margin: 200px;
+			transform-style: preserve-3d;
+		}
+		#big{
+
+			position: relative;
+		    width: 300px;
+    		height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateX(-45deg)  rotateY(-45deg);
+            animation: bigXZ 2s infinite;
+		}
+		#big div{
+			background-color: #74afcb;	
+			width: 300px;
+			height: 300px;
+			border:1px solid #fff;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.6;
+		
+		}
+		#big div:nth-child(1){
+			transform: translateZ(151px);
+			
+		}
+		#big div:nth-child(2){
+			transform: translateZ(-151px);
+		}
+		#big div:nth-child(3){
+			transform: rotateX(-90deg)translateZ(151px);
+			
+		}
+		#big div:nth-child(4){
+			transform: rotateX(90deg)translateZ(151px) ;
+			
+		}
+		#big div:nth-child(5){
+			transform: rotateY(-90deg)translateZ(151px) ;
+			
+		}
+		#big div:nth-child(6){
+			transform: rotateY(90deg)translateZ(151px) ;
+		}
+		#small{
+
+			position: relative;
+		    width: 150px;
+    		height: 150px;
+            transform-style: preserve-3d;
+            transform: rotateX(-45deg)  rotateY(-45deg);
+            top: -203px;
+    		left: 75px;
+    		animation: smallXZ 2s infinite;
+		}
+		#small div{
+			background-color: #789ddf;	
+			width: 150px;
+			height: 150px;
+			border:1px solid #fff;
+			position: absolute;
+			top: 0;
+			left: 0;
+			
+		}
+		#small div:nth-child(1){
+			transform: translateZ(76px);
+			
+		}
+		#small div:nth-child(2){
+			transform: translateZ(-76px);
+		}
+		#small div:nth-child(3){
+			transform: rotateX(-90deg)translateZ(76px);
+			
+		}
+		#small div:nth-child(4){
+			transform: rotateX(90deg)translateZ(76px) ;
+			
+		}
+		#small div:nth-child(5){
+			transform: rotateY(-90deg)translateZ(76px) ;
+			
+		}
+		#small div:nth-child(6){
+			transform: rotateY(90deg)translateZ(76px) ;
+		}
+		@keyframes bigXZ
+		{
+		0% { transform: rotateX(-45deg)  rotateY(-45deg);}
+		50%{ transform: rotateX(-45deg)  rotateY(-135deg);}
+		100% { transform: rotateX(-45deg)  rotateY(-225deg);}
+		}
+		@keyframes smallXZ
+		{
+		0% { transform: rotateX(-45deg)  rotateY(45deg);}
+		50%{ transform: rotateX(-45deg)  rotateY(135deg);}
+		100% { transform: rotateX(-45deg)  rotateY(225deg);}
+		}
+
+	</style>
+		<style type="text/css">
+		#all{
+			position: relative;
+			margin: 200px;
+		}
+		#f{
+
+			position: relative;
+		    width: 300px;
+    		height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateX(-45deg)  rotateY(-45deg);
+            animation: bigXZ 2s infinite;
+		}
+		.big {
+			background-color: #74afcb;	
+			width: 300px;
+			height: 300px;
+			border:1px solid #fff;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.6;
+		
+		}
+		#f div:nth-child(1){
+			transform: translateZ(151px);
+			
+		}
+		#f div:nth-child(2){
+			transform: translateZ(-151px);
+		}
+		#f div:nth-child(3){
+			transform: rotateX(-90deg)translateZ(151px);
+			
+		}
+		#f div:nth-child(4){
+			transform: rotateX(90deg)translateZ(151px) ;
+			
+		}
+		#f div:nth-child(5){
+			transform: rotateY(-90deg)translateZ(151px) ;
+			
+		}
+		#f div:nth-child(6){
+			transform: rotateY(90deg)translateZ(151px) ;
+		}
+		/*small{
+
+			position: relative;
+		    width: 150px;
+    		height: 150px;
+            transform-style: preserve-3d;
+            transform: rotateX(-45deg)  rotateY(-45deg);
+            top: -203px;
+    		left: 75px;
+    		animation: smallXZ 2s infinite;
+		}*/
+		.small{
+			background-color: #789ddf;	
+			width: 150px;
+			height: 150px;
+			border:1px solid #fff;
+			position: absolute;
+		    top: 106px;
+   			left: 75px;
+			/*animation: smallXZ 2s infinite;*/
+		}
+		#f div:nth-child(7){
+			transform: translateZ(76px);
+			
+		}
+		#f div:nth-child(8){
+			transform: translateZ(-76px);
+		}
+		#f div:nth-child(9){
+			transform: rotateX(-90deg)translateZ(76px);
+			
+		}
+		#f div:nth-child(10){
+			transform: rotateX(90deg)translateZ(76px) ;
+			
+		}
+		#f div:nth-child(11){
+			transform: rotateY(-90deg)translateZ(76px) ;
+			
+		}
+		#f div:nth-child(12){
+			transform: rotateY(90deg)translateZ(76px) ;
+		}
+		@keyframes bigXZ
+		{
+		0% { transform: rotateX(-45deg)  rotateY(-45deg);}
+		50%{ transform: rotateX(-45deg)  rotateY(-135deg);}
+		100% { transform: rotateX(-45deg)  rotateY(-225deg);}
+		}
+		@keyframes smallXZ
+		{
+		0% { transform: rotateX(-45deg)  rotateY(45deg);}
+		50%{ transform: rotateX(-45deg)  rotateY(135deg);}
+		100% { transform: rotateX(-45deg)  rotateY(225deg);}
+		}
+
+	</style>
+</head>
+<body>
+	<div id="all">
+		<div id="big">
+			<div ></div>
+			<div ></div>
+			<div ></div>
+			<div ></div>
+			<div ></div>
+			<div ></div>
+		</div>
+		<div id="small">
+			<div ></div>
+			<div ></div>
+			<div ></div>
+			<div ></div>
+			<div ></div>
+			<div ></div>
+		</div>
+	</div>
+	<div id="all">
+		<div id="f">
+			<div class='big'></div>
+			<div class='big'></div>
+			<div class='big'></div>
+			<div class='big'></div>
+			<div class='big'></div>
+			<div class='big'></div>
+			<div class="small"></div>
+			<div class="small"></div>
+			<div class="small"></div>
+			<div class="small"></div>
+			<div class="small"></div>
+			<div class="small"></div>
+		</div>
+	</div>
+</body>
+</html>

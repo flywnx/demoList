@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Vue练习2</title>
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+	<div id="example-3">
+	  <button v-on:click="say('hi')">Say hi</button>
+	  <button v-on:click="say('what')">Say what</button>
+		<button v-on:click="warn('Form cannot be submitted yet.', $event)">
+		  Submit
+		</button>
+		<!-- 阻止单击事件冒泡 -->
+		<a v-on:click.stop="doThis"></a>
+		<!-- 提交事件不再重载页面 -->
+		<form v-on:submit.prevent="onSubmit"></form>
+		<!-- 修饰符可以串联 -->
+		<a v-on:click.stop.prevent="doThat"></a>
+		<!-- 只有修饰符 -->
+		<form v-on:submit.prevent></form>
+		<!-- 添加事件侦听器时使用事件捕获模式 -->
+		<div v-on:click.capture="doThis">...</div>
+		<!-- 只当事件在该元素本身 (比如不是子元素) 触发时触发回调 -->
+		<div v-on:click.self="doThat">...</div>
+	</div>
+	<h4>computed（计算属性）不能传参，如需传参用methods(方法)</h2>
+	<fieldset id="h5-form">
+		<legend>表单</legend>
+		<input v-model="message" placeholder="edit me">
+		<p>Message is: {{ message }}</p>
+		<p style="white-space: pre-line;">Multiline message is:{{ message }}</p>
+		<textarea v-model="message" placeholder="add multiple lines"></textarea>
+		<input type="checkbox" id="checkbox" v-model="checked">
+		<label for="checkbox">{{ checked }}</label>	
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		  <label for="jack">Jack</label>
+		  <input type="checkbox" id="john" value="John" v-model="checkedNames">
+		  <label for="john">John</label>
+		  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		  <label for="mike">Mike</label>
+		  <br>
+		  <span>Checked names: {{ checkedNames }}</span>
+		  <br>
+		   <input type="radio" id="one" value="One" v-model="picked">
+		  <label for="one">One</label>
+		  <br>
+		  <input type="radio" id="two" value="Two" v-model="picked">
+		  <label for="two">Two</label>
+		  <br>
+		  <span>Picked: {{ picked }}</span>
+		  <br>
+		   <select v-model="selected">
+		    <option disabled value="">请选择</option>
+		    <option>A</option>
+		    <option>B</option>
+		    <option>C</option>
+		  </select>
+		  <span>Selected: {{ selected }}</span>
+		  <br>
+		  <select v-model="selecteds" multiple style="width: 50px;">
+		    <option>A</option>
+		    <option>B</option>
+		    <option>C</option>
+		    
+		  </select>
+		  <br>
+		  <span>Selected: {{ selecteds }}</span>
+		  <br>
+		  <select v-model="selected">
+		 	 <option v-for="option in options" v-bind:value="option.value">
+		    {{ option.text }}
+			  </option>
+			</select>
+			<span>Selected: {{ selected }}</span>
+			<br>
+			<input
+			  type="checkbox"
+			  v-model="toggle"
+			  v-bind:true-value="a"
+			  v-bind:false-value="b"
+			>
+			<span>{{toggle}}</span>
+			<br>
+			<!-- 在 "change" 而不是 "input" 事件中更新 -->
+			<input v-model.lazy="msg" >
+			<br>
+			<input v-model="age" type="number">
+			<input v-model.trim="msg">
+			<my-component></my-component>
+	</fieldset>
+	<div id="example">
+		<my-component></my-component>
+	</div>
+	<div id="example-2">
+	  <simple-counter></simple-counter>
+	  <simple-counter></simple-counter>
+	  <simple-counter></simple-counter>
+	  <child message="hellosss!"></child>
+	</div>
+	<div id="counter-event-example">
+	  <p>{{ total }}</p>
+	  <button-counter v-on:increment="incrementTotal"></button-counter>
+	  <button-counter v-on:increment="incrementTotal"></button-counter>
+	  <currency-input v-model="price"></currency-input>
+	</div>
+
+</body>
+<script src="js/try_vue2.js"></script>
+</html>
